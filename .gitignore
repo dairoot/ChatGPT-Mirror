@@ -1,0 +1,9 @@
+
+worker/*
+admin/
+
+
+!worker/wrangler.example.toml
+
+
+.DS_Store
