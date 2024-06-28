@@ -3,7 +3,7 @@ worker/*
 admin/
 
 
-!worker/wrangler.example.toml
+# !worker/wrangler.toml
 
 
 .DS_Store

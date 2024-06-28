@@ -1,5 +1,4 @@
 localhost:443 {
-
 	handle /fe/* {
 		uri strip_prefix /fe
 		file_server
@@ -8,10 +7,9 @@ localhost:443 {
 
 	handle {
 		reverse_proxy * {
-	        to localhost:8787
-	        # to localhost:8787 localhost:8788 localhost:8789 localhost:8790 localhost:8791
-	        lb_policy round_robin
-    	}
+			to localhost:50001
+			# to localhost:50001 localhost:50002
+			lb_policy round_robin
+		}
 	}
-
 }
