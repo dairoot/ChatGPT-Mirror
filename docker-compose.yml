@@ -3,7 +3,6 @@ services:
     image: dairoot/chatgpt-mirror:latest
     volumes:
       - ./admin/dist:/tmp/dist
-      - ./config.toml:/app/worker/config.toml
       - chatgpt_data:/app/worker/.wrangler
     # environment: # 管理后台账号密码 （请更改此账号密码，并取消注释）
     #   - ADMIN_USERNAME=dairoot
