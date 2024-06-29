@@ -43,7 +43,7 @@ https://chatgpt.dairoot.cn
 
 ```bash
 # 本地需要翻墙
-vi config.toml # 修改管理后台账号密码
+vi docker-compose.yml # 修改管理后台账号密码
 
 docker compose up
 
@@ -57,7 +57,7 @@ caddy run --config ./Caddyfile --watch
 1. 运行
 
 ```bash
-vi config.toml # 修改管理后台账号密码
+vi docker-compose.yml # 修改管理后台账号密码
 
 docker compose pull # 更新镜像
 
