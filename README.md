@@ -43,9 +43,13 @@ https://chatgpt.dairoot.cn
 
 ```bash
 # 本地需要翻墙
-vi docker-compose.yml # 修改管理后台账号密码
+docker pull dairoot/chatgpt-mirror
 
-docker compose up
+docker run -p 50001:8787 \
+   -e ADMIN_USERNAME=usernamexxx \
+   -e ADMIN_PASSWORD=passwordxxx \
+   -v ./admin/dist:/tmp/dist \
+   dairoot/chatgpt-mirror
 
 caddy run --config ./Caddyfile --watch
 
@@ -59,7 +63,7 @@ caddy run --config ./Caddyfile --watch
 ```bash
 vi docker-compose.yml # 修改管理后台账号密码
 
-docker compose pull # 更新镜像
+docker compose pull # 拉取镜像
 
 docker compose up -d # 后台运行
 ```
