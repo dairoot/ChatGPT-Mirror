@@ -1,9 +1,0 @@
-[[d1_databases]]
-binding = "DB" # 本地数据库 sqlite
-database_name = "chatgpt"
-database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # 随意填写 或者不更改
-
-
-[vars]
-# ADMIN_USERNAME = 'dairoot' # 管理后台账号密码 （请更改此密码，并取消注释）
-# ADMIN_PASSWORD = 'dairoot' 
