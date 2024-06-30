@@ -27,17 +27,13 @@ https://chatgpt.dairoot.cn
 - 账号：dairoot
 - 密码：dairoot
 
-```
-为了获得最佳体验，请先观看下方视频。
-```
+为了获得最佳体验，请先观看 [使用方法](https://www.bilibili.com/video/BV1fD421M7xP/)
 
-## 使用方法
-
-<!-- [![IMAGE ALT TEXT HERE](https://member.bilibili.com/ed6f9a02-54e5-41a4-bc3f-7ad7b9aeb282)](https://www.bilibili.com/video/BV1fD421M7xP/) -->
-
+<!--
 <a href="https://www.bilibili.com/video/BV1fD421M7xP/" target="_blank">
   <img src="./docs/cover.jpeg"  alt="使用方法">
 </a>
+-->
 
 ## 本地运行
 
