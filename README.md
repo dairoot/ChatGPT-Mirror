@@ -1,7 +1,7 @@
 <h1 align="center">ChatGPT Mirror</h1>
 
+[![Docker](https://img.shields.io/docker/pulls/dairoot/chatgpt-mirror?label=ChatGPT-Mirror&logo=docker)](https://hub.docker.com/r/dairoot/chatgpt-mirror)
 [![License](https://img.shields.io/github/license/dairoot/ChatGPT-Mirror)](https://github.com/dairoot/ChatGPT-Mirror/blob/main/LICENSE)
-[![Docker](https://img.shields.io/docker/pulls/dairoot/chatgpt-mirror?label=ChatGPT-Mirror)](https://hub.docker.com/r/dairoot/chatgpt-mirror)
 
 ChatGPT Mirror 后台是一个 ChatGPT 镜像网站，允许多账号共享管理。实现多人同时使用 ChatGPT 服务。
 
