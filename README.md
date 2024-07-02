@@ -14,12 +14,6 @@ ChatGPT Mirror 后台是一个 ChatGPT 镜像网站，允许多账号共享管�
 - 3.5 账号 可免费体验 GPT4.0
 - docker 一键部署，免去繁琐配置流程
 
-## 声明
-
-```
-非二开项目，不依赖任何第三方代理和工具。
-```
-
 ## 在线体验
 
 https://chatgpt.dairoot.cn
@@ -27,13 +21,20 @@ https://chatgpt.dairoot.cn
 - 账号：dairoot
 - 密码：dairoot
 
-为了获得最佳体验，请先观看 [使用方法](https://www.bilibili.com/video/BV1fD421M7xP/)
+为了获得最佳体验，请先观看以下视频教程
 
-<!--
 <a href="https://www.bilibili.com/video/BV1fD421M7xP/" target="_blank">
   <img src="./docs/cover.jpeg"  alt="使用方法">
 </a>
--->
+
+
+## 声明
+
+```
+未经授权，禁止商业行为！！！
+非二开项目，不依赖任何第三方代理和工具。
+```
+
 
 ## 本地运行
 
