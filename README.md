@@ -27,14 +27,11 @@ https://chatgpt.dairoot.cn
   <img src="./docs/cover.jpeg"  alt="使用方法">
 </a>
 
-
 ## 声明
 
 ```
-未经授权，禁止商业行为！！！
 非二开项目，不依赖任何第三方代理和工具。
 ```
-
 
 ## 本地运行
 
@@ -55,9 +52,14 @@ caddy run --config ./Caddyfile --watch
 
 ## 部署到服务器（海外 vps）
 
-1. 运行
+#### 1. 运行
 
 ```bash
+# 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
+cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
+
+cd ChatGPT-Mirror/
+
 vi docker-compose.yml # 修改管理后台账号密码
 
 docker compose pull # 拉取镜像
@@ -65,7 +67,7 @@ docker compose pull # 拉取镜像
 docker compose up -d # 后台运行
 ```
 
-2. 配置 nginx （需要配置 https）
+#### 2. 配置 nginx （需要配置 https）
 
 ```bash
 upstream chatgpt {
@@ -91,7 +93,7 @@ server {
 
     # 静态文件
     location /fe {
-       alias /home/chatgpt-mirror/admin/dist;
+       alias /home/ChatGPT-Mirror/admin/dist;
     }
 
     location / {
