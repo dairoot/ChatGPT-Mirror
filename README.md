@@ -37,6 +37,10 @@ https://chatgpt.dairoot.cn
 
 ```bash
 # 本地需要翻墙
+git clone https://github.com/dairoot/ChatGPT-Mirror.git
+
+cd ChatGPT-Mirror/
+
 docker pull dairoot/chatgpt-mirror
 
 docker run -p 50001:8787 \
