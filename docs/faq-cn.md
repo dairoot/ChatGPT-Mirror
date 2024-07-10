@@ -15,7 +15,7 @@
 
 该问题目前只能通过更换服务器 IP 解决
 
-或者使用付费的 [capsolver](https://www.capsolver.com/) 方案
+或者使用付费的 [capsolver](https://docs.capsolver.com/zh/guide/antibots/cloudflare_challenge.html) 方案
 
 或者使用代理（正在积极开发中）
 
