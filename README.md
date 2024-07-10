@@ -118,6 +118,14 @@ server {
 }
 ```
 
+## FQA
+
+[简体中文 > 常见问题](./docs/faq-cn.md)
+
+## 捐赠
+
+[Buy Me a Coffee](./docs/donation.md)
+
 ## Star History
 
 ![Star History Chart](https://api.star-history.com/svg?repos=dairoot/ChatGPT-Mirror&type=Timeline)
