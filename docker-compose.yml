@@ -9,7 +9,7 @@ services:
     #   - ADMIN_PASSWORD=dairoot
 
     ports:
-      - "50001-50002:8787"
+      - "50001-50002:50001"
     deploy:
       replicas: 2
     restart: always
