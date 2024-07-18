@@ -64,7 +64,7 @@ cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
 
 cd ChatGPT-Mirror/
 
-vi docker-compose.yml # 修改管理后台账号密码
+cp .env.example .env && vi .env # 修改管理后台账号密码
 
 docker compose pull # 拉取镜像
 
@@ -129,7 +129,6 @@ server {
 ## 捐赠
 
 [Buy Me a Coffee](./docs/donation.md)
-
 
 ## Star History
 

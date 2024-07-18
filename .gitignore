@@ -1,9 +1,5 @@
 
 worker/*
 admin/
-
-
-# !worker/wrangler.toml
-
-
+.env
 .DS_Store

@@ -4,9 +4,6 @@ services:
     volumes:
       - ./admin/dist:/tmp/dist
       - chatgpt_data:/app/worker/.wrangler
-    # environment: # 管理后台账号密码 （请更改此账号密码，并取消注释）
-    #   - ADMIN_USERNAME=dairoot
-    #   - ADMIN_PASSWORD=dairoot
 
     ports:
       - "50001-50002:50001"
