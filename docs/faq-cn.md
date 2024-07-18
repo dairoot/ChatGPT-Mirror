@@ -29,4 +29,4 @@
 
 - 验证码通常情况下只会出现一次。请避免打开 F12 开发者工具，因为这可能会触发验证码。
 
-- 使用付费的 [capsolver](https://docs.capsolver.com/zh/guide/antibots/cloudflare_challenge.html) 方案（待接入）
+- 使用付费的 [capsolver](https://dashboard.capsolver.com/passport/register?inviteCode=GT8NyMFVF0bG) 方案（待接入）
