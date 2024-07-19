@@ -43,7 +43,7 @@ cd ChatGPT-Mirror/
 
 docker pull dairoot/chatgpt-mirror
 
-docker run -p 50001:8787 \
+docker run -p 50001:50001 \
    -e ADMIN_USERNAME=usernamexxx \
    -e ADMIN_PASSWORD=passwordxxx \
    -v ./admin/dist:/tmp/dist \
