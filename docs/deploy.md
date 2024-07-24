@@ -15,7 +15,7 @@ docker compose pull # 拉取镜像
 docker compose up -d # 后台运行
 ```
 
-#### 2. 配置 nginx （需要配置 https）
+#### 2.1 配置 nginx （需要配置 https）
 
 ```bash
 upstream chatgpt {
@@ -59,6 +59,35 @@ server {
     listen      [::]:80;
     server_name chatgpt.example.com;
     return      301 https://chatgpt.example.com$request_uri;
+}
+```
+#### 2.2 如果使用 `cloudflare` 小黄云代理，则无需https。nginx配置如下
+
+```
+upstream chatgpt {
+    server 127.0.0.1:50001;
+    server 127.0.0.1:50002;
+}
+
+server {
+    listen              80;
+    server_name         chatgpt.example.com;
+
+    # 日志文件
+    #access_log /data/logs/ngx.chatgpt.access.log json_combined;
+    access_log /data/logs/ngx.chatgpt.access.log;
+    error_log /data/logs/ngx.chatgpt.error.log;
+
+    # 静态文件
+   location /fe {
+       alias /home/ChatGPT-Mirror/admin/dist;
+   }
+
+    location / {
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_pass http://chatgpt;
+    }
 }
 ```
 
