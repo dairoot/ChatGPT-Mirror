@@ -8,11 +8,10 @@ ChatGPT Mirror 后台是一个 ChatGPT 镜像网站，允许多账号共享管�
 ## 特点
 
 - 提供与官网同等的极致体验。
+- 提供 ChatGPT 聊天接口 转 API `/v1/chat/completions`
 - 用户无需翻墙，便可轻松访问并使用 ChatGPT 官方网站的所有功能。
 - 通过在 `Mirror` 后台录入 `ChatGPT Token`，让团队成员每人拥有独立账号 (或共享同一个`ChatGPT Plus`账号)。
 - 提供便捷的管理后台，帮助管理员高效管理账号。
-- 3.5 账号 可免费体验 GPT4.0
-- docker 一键部署，免去繁琐配置流程
 
 ## 在线体验
 
@@ -71,51 +70,71 @@ docker compose pull # 拉取镜像
 docker compose up -d # 后台运行
 ```
 
-#### 2. 配置 nginx （需要配置 https）
+#### 2. 若需要配置 ChatGPT 聊天页面，请点击查看[完整部署流程](./docs/deploy.md)
+
+## 环境变量
+
+<table>
+  <tr align="left">
+    <th>分类</th>
+    <th>变量名</th>
+    <th>类型</th>
+    <th>默认值</th>
+    <th>描述</th>
+  </tr>
+  <tr align="left">
+    <td rowspan="2">管理后台</td>
+    <td><code>ADMIN_USERNAME</code></td>
+    <td><code>string</code></td>
+    <td><code>None</code></td>
+    <td>管理后台账号</td>
+  </tr>
+  <tr align="left">
+    <td><code>ADMIN_PASSWORD</code></td>
+    <td><code>string</code></td>
+    <td><code>None</code></td>
+    <td>管理后台密码</td>
+  </tr>
+  <tr align="left">
+    <td rowspan="3">API 相关</td>
+    <td><code>ENABLE_MIRROR_API</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>true</code></td>
+    <td>是否开启 API 访问</td>
+  </tr>
+  <tr align="left">
+    <td><code>MIRROR_API_PREFIX</code></td>
+    <td><code>string</code></td>
+    <td><code>None</code></td>
+    <td>API 访问秘钥，建议配置避免他人利用</td>
+  </tr>
+  <tr align="left">
+    <td><code>ENABLE_CONTEXT</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>false</code></td>
+    <td>是否开启上下文，生成环境建议开启</td>
+  </tr>
+</table>
+
+## 聊天 API 接口
+
+可搭配 [ChatGPT-Next-Web](https://app.nextchat.dev) 使用
+
+accessToken 获取地址：https://chatgpt.com/api/auth/session
 
 ```bash
-upstream chatgpt {
-    server 127.0.0.1:50001;
-    server 127.0.0.1:50002;
-}
-
-server {
-    listen              443 ssl http2;
-    listen              [::]:443 ssl http2;
-    server_name         chatgpt.example.com;
-
-    # SSL 文件
-    ssl_certificate     /etc/nginx/ssl/chatgpt.example.com/fullchain.crt;
-    ssl_certificate_key /etc/nginx/ssl/chatgpt.example.com/private.pem;
+export accessToken=XXXXX
+export yourUrl=http://127.0.0.1:50001/上述环境变量配置的MIRROR_API_PREFIX
 
 
-    # 日志文件
-    # access_log /data/logs/ngx.chatgpt.access.log json_combined;
-    access_log /data/logs/ngx.chatgpt.access.log;
-    error_log /data/logs/ngx.chatgpt.error.log;
-
-
-    # 静态文件
-    location /fe {
-       alias /home/ChatGPT-Mirror/admin/dist;
-    }
-
-    location / {
-        proxy_redirect off;
-        proxy_set_header Host $host;
-        proxy_pass http://chatgpt;
-    }
-
-
-}
-
-# HTTP redirect
-server {
-    listen      80;
-    listen      [::]:80;
-    server_name chatgpt.example.com;
-    return      301 https://chatgpt.example.com$request_uri;
-}
+curl --location "${yourUrl}/v1/chat/completions" \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer ${accessToken}" \
+--data '{
+     "model": "gpt-4o-mini",
+     "messages": [{"role": "user", "content": "你好呀!"}],
+     "stream": true
+   }'
 ```
 
 ## FQA
