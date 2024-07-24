@@ -122,6 +122,14 @@ docker compose up -d # 后台运行
 
 accessToken 获取地址：https://chatgpt.com/api/auth/session
 
+| API 模型 | 描述 |
+| --- | --- |
+| `gpt-4o-mini` | ChatGPT 4o mini (推荐使用) |
+| `gpt-4o` | ChatGPT 4o |
+| `gpt-4` | ChatGPT 4 |
+| `gpt-4-mobile` | ChatGPT 手机版本模型 |
+| `gpt-3.5-turbo` | ChatGPT 3.5 (即将下线) |
+
 ```bash
 export accessToken=XXXXX
 export yourUrl=http://127.0.0.1:50001/上述环境变量配置的MIRROR_API_PREFIX
