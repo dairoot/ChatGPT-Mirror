@@ -147,6 +147,16 @@ curl --location "${yourUrl}/v1/chat/completions" \
      "stream": true
    }'
 ```
+若需指定会话，请在请求中添加 `conversation_id` 和 `parent_message_id` 字段：
+```json
+{
+  "model": "gpt-4o-mini",
+  "messages": [{"role": "user", "content": "你好呀!"}],
+  "stream": true,
+  "conversation_id": "5ca8838d-ab10-4e41-90b8-2c7ed546ed44",
+  "parent_message_id": "ae10397c-f90d-4ca8-9a4d-0002994e6c31",
+}
+```
 
 ## FQA
 
