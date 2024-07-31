@@ -22,7 +22,8 @@ https://chatgpt.dairoot.cn
 
 为了获得最佳体验，请先观看以下视频教程
 
-https://github.com/user-attachments/assets/dda78836-6c6d-499d-80fe-f0ecfcbf0728
+https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
+
 <!--
 <a href="https://www.bilibili.com/video/BV1fD421M7xP/" target="_blank">
   <img src="./docs/img/cover.jpeg"  alt="使用方法">
