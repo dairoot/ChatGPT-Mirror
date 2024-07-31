@@ -27,6 +27,6 @@
 
 ## 4. 为什么向 ChatGPT 提问会出现验证码
 
-- 验证码通常情况下只会出现一次。请避免打开 F12 开发者工具，因为这可能会触发验证码。
+- 验证码通常情况下只会出现一次。
 
 - 使用付费的 [capsolver](https://dashboard.capsolver.com/passport/register?inviteCode=GT8NyMFVF0bG) 方案（待接入）
