@@ -30,12 +30,6 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 </a>
 -->
 
-## 声明
-
-```
-非二开项目，不依赖任何第三方代理和工具。
-```
-
 ## 本地运行
 
 ```bash
@@ -122,20 +116,26 @@ docker compose up -d # 后台运行
 
 ## 聊天 API 接口
 
-可搭配 [ChatGPT-Next-Web](https://app.nextchat.dev) 使用
+| API 模型        | 描述                       |
+| --------------- | -------------------------- |
+| `gpt-4o-mini`   | ChatGPT 4o mini (推荐使用) |
+| `gpt-4o`        | ChatGPT 4o                 |
+| `gpt-4`         | ChatGPT 4                  |
+| `gpt-4-mobile`  | ChatGPT 手机版本模型       |
+| `gpt-3.5-turbo` | ChatGPT 3.5 (即将下线)     |
 
+可搭配 [ChatGPT-Next-Web](https://app.nextchat.dev)、[Lobe-Chat](https://github.com/lobehub/lobe-chat) 使用
+
+```
 accessToken 获取地址：https://chatgpt.com/api/auth/session
 
-| API 模型 | 描述 |
-| --- | --- |
-| `gpt-4o-mini` | ChatGPT 4o mini (推荐使用) |
-| `gpt-4o` | ChatGPT 4o |
-| `gpt-4` | ChatGPT 4 |
-| `gpt-4-mobile` | ChatGPT 手机版本模型 |
-| `gpt-3.5-turbo` | ChatGPT 3.5 (即将下线) |
+API 地址为：https://你的域名/上述环境变量配置的MIRROR_API_PREFIX
+```
+
+聊天接口请求示例：
 
 ```bash
-export accessToken=XXXXX
+export accessToken=XXXXX  # 获取地址：https://chatgpt.com/api/auth/session
 export yourUrl=http://127.0.0.1:50001/上述环境变量配置的MIRROR_API_PREFIX
 
 
@@ -148,14 +148,16 @@ curl --location "${yourUrl}/v1/chat/completions" \
      "stream": true
    }'
 ```
-若需指定会话，请在请求中添加 `conversation_id` 和 `parent_message_id` 字段：
+
+若需指定会话，需要在请求中添加 `conversation_id` 和 `parent_message_id` 字段：
+
 ```json
 {
   "model": "gpt-4o-mini",
-  "messages": [{"role": "user", "content": "你好呀!"}],
+  "messages": [{ "role": "user", "content": "你好呀!" }],
   "stream": true,
   "conversation_id": "5ca8838d-ab10-4e41-90b8-2c7ed546ed44",
-  "parent_message_id": "ae10397c-f90d-4ca8-9a4d-0002994e6c31",
+  "parent_message_id": "ae10397c-f90d-4ca8-9a4d-0002994e6c31"
 }
 ```
 
