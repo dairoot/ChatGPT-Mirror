@@ -34,21 +34,17 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 
 ```bash
 # 本地需要翻墙
-git clone https://github.com/dairoot/ChatGPT-Mirror.git
-
-cd ChatGPT-Mirror/
 
 docker pull dairoot/chatgpt-mirror
 
 docker run -p 50001:50001 \
    -e ADMIN_USERNAME=usernamexxx \
    -e ADMIN_PASSWORD=passwordxxx \
-   -v ./admin/dist:/tmp/dist \
    dairoot/chatgpt-mirror
 
-caddy run --config ./Caddyfile --watch
+caddy run --config ./Caddyfile  --watch
 
-访问: https://localhost/
+访问: https://localhost
 ```
 
 ## 部署到服务器（海外 vps）

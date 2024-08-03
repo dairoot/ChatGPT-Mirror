@@ -20,7 +20,7 @@ docker compose up -d # 后台运行
 ```bash
 upstream chatgpt {
     server 127.0.0.1:50001;
-    server 127.0.0.1:50002;
+    # server 127.0.0.1:50002;
 }
 
 server {
@@ -39,11 +39,6 @@ server {
     error_log /data/logs/ngx.chatgpt.error.log;
 
 
-    # 静态文件
-    location /fe {
-       alias /home/ChatGPT-Mirror/admin/dist;
-    }
-
     location / {
         proxy_redirect off;
         proxy_set_header Host $host;
@@ -61,12 +56,13 @@ server {
     return      301 https://chatgpt.example.com$request_uri;
 }
 ```
-#### 2.2 如果使用 `cloudflare` 小黄云代理，则无需https。nginx配置如下
 
-```
+#### 2.2 如果使用 `cloudflare` 小黄云代理，则无需 https。nginx 配置如下
+
+```bash
 upstream chatgpt {
     server 127.0.0.1:50001;
-    server 127.0.0.1:50002;
+    # server 127.0.0.1:50002;
 }
 
 server {
@@ -77,11 +73,6 @@ server {
     #access_log /data/logs/ngx.chatgpt.access.log json_combined;
     access_log /data/logs/ngx.chatgpt.access.log;
     error_log /data/logs/ngx.chatgpt.error.log;
-
-    # 静态文件
-   location /fe {
-       alias /home/ChatGPT-Mirror/admin/dist;
-   }
 
     location / {
         proxy_redirect off;

@@ -2,16 +2,13 @@ services:
   worker:
     image: dairoot/chatgpt-mirror:latest
     volumes:
-      - ./admin/dist:/tmp/dist
       - chatgpt_data:/app/worker/.wrangler
 
     env_file:
       - .env
 
     ports:
-      - "50001-50002:50001"
-    deploy:
-      replicas: 2
+      - "50001:50001"
 
     restart: always
 

@@ -1,15 +1,7 @@
-localhost:443 {
-	handle /fe/* {
-		uri strip_prefix /fe
-		file_server
-		root * ./admin/dist/
-	}
 
-	handle {
-		reverse_proxy * {
-			to localhost:50001
-			# to localhost:50001 localhost:50002
-			lb_policy round_robin
-		}
-	}
+
+localhost:443 {
+
+    reverse_proxy * http://127.0.0.1:50001
+
 }
