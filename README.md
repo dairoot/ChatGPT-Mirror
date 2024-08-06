@@ -42,7 +42,9 @@ docker run -p 50001:50001 \
    -e ADMIN_PASSWORD=passwordxxx \
    dairoot/chatgpt-mirror
 
-caddy run --config ./Caddyfile  --watch
+
+# 使用 caddy 作为反向代理，将 443 端口转发到 50001 端口 (开启https)
+caddy run --adapter caddyfile --config <(echo 'localhost:443 {\n reverse_proxy * http://127.0.0.1:50001 \n}')
 
 访问: https://localhost
 ```
@@ -123,14 +125,12 @@ API 地址为：https://你的域名/上述环境变量配置的MIRROR_API_PREFI
 参数详情
 | 字段 | 类型 | 默认值 | 必填 | 描述 |
 | --- | --- | --- |--- |--- |
-| `model` | `string` | `None` | `是` |模型名称 <br>  `gpt-4o-mini`  `gpt-4o` `gpt-4` `gpt-4-mobile`|
-| `messages` | `array` | `None` |  `是` |消息内容 |
+| `model` | `string` | `None` | `是` |模型名称 <br> `gpt-4o-mini` `gpt-4o` `gpt-4` `gpt-4-mobile`|
+| `messages` | `array` | `None` | `是` |消息内容 |
 | `stream` | `boolean` | `None` | `是` |是否流式返回 |
-| `conversation_id` | `string`  |`自动匹配` | `否`  | 会话 ID |
-| `parent_message_id` | `string`  |`自动匹配` | `否` | 父消息 ID |
+| `conversation_id` | `string` |`自动匹配` | `否` | 会话 ID |
+| `parent_message_id` | `string` |`自动匹配` | `否` | 父消息 ID |
 | `hatd` | `boolean` |`默认同环境变量` | `否` | 同上述环境变量的 `HATD` |
-
-
 
 聊天接口请求示例：
 
@@ -151,7 +151,6 @@ curl --location "${yourUrl}/v1/chat/completions" \
      "hatd": false
    }'
 ```
-
 
 ## FQA
 

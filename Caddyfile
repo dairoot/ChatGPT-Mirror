@@ -1,7 +1,0 @@
-
-
-localhost:443 {
-
-    reverse_proxy * http://127.0.0.1:50001
-
-}
