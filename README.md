@@ -100,25 +100,17 @@ docker compose up -d # 后台运行
     <td><code>MIRROR_API_PREFIX</code></td>
     <td><code>string</code></td>
     <td><code>None</code></td>
-    <td>API 访问秘钥，建议配置避免他人利用</td>
+    <td>API 访问前缀，建议配置</td>
   </tr>
   <tr align="left">
-    <td><code>ENABLE_CONTEXT</code></td>
+    <td><code>HATD</code></td>
     <td><code>Boolean</code></td>
     <td><code>false</code></td>
-    <td>是否开启上下文，生成环境建议开启</td>
+    <td>开启临时聊天（不保存聊天记录）</td>
   </tr>
 </table>
 
 ## 聊天 API 接口
-
-| API 模型        | 描述                       |
-| --------------- | -------------------------- |
-| `gpt-4o-mini`   | ChatGPT 4o mini (推荐使用) |
-| `gpt-4o`        | ChatGPT 4o                 |
-| `gpt-4`         | ChatGPT 4                  |
-| `gpt-4-mobile`  | ChatGPT 手机版本模型       |
-| `gpt-3.5-turbo` | ChatGPT 3.5 (即将下线)     |
 
 可搭配 [ChatGPT-Next-Web](https://app.nextchat.dev)、[Lobe-Chat](https://github.com/lobehub/lobe-chat) 使用
 
@@ -127,6 +119,18 @@ accessToken 获取地址：https://chatgpt.com/api/auth/session
 
 API 地址为：https://你的域名/上述环境变量配置的MIRROR_API_PREFIX
 ```
+
+参数详情
+| 字段 | 类型 | 默认值 | 必填 | 描述 |
+| --- | --- | --- |--- |--- |
+| `model` | `string` | `None` | `是` |模型名称 <br>  `gpt-4o-mini`  `gpt-4o` `gpt-4` `gpt-4-mobile`|
+| `messages` | `array` | `None` |  `是` |消息内容 |
+| `stream` | `boolean` | `None` | `是` |是否流式返回 |
+| `conversation_id` | `string`  |`自动匹配` | `否`  | 会话 ID |
+| `parent_message_id` | `string`  |`自动匹配` | `否` | 父消息 ID |
+| `hatd` | `boolean` |`默认同环境变量` | `否` | 同上述环境变量的 `HATD` |
+
+
 
 聊天接口请求示例：
 
@@ -141,21 +145,13 @@ curl --location "${yourUrl}/v1/chat/completions" \
 --data '{
      "model": "gpt-4o-mini",
      "messages": [{"role": "user", "content": "你好呀!"}],
-     "stream": true
+     "stream": true,
+     "conversation_id": null,
+     "parent_message_id": null,
+     "hatd": false
    }'
 ```
 
-若需指定会话，需要在请求中添加 `conversation_id` 和 `parent_message_id` 字段：
-
-```json
-{
-  "model": "gpt-4o-mini",
-  "messages": [{ "role": "user", "content": "你好呀!" }],
-  "stream": true,
-  "conversation_id": "5ca8838d-ab10-4e41-90b8-2c7ed546ed44",
-  "parent_message_id": "ae10397c-f90d-4ca8-9a4d-0002994e6c31"
-}
-```
 
 ## FQA
 

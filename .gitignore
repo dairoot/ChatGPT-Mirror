@@ -1,5 +1,4 @@
 
-worker/*
 admin/
 .env
 .DS_Store
