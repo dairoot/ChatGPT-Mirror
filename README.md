@@ -37,14 +37,10 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 
 docker pull dairoot/chatgpt-mirror
 
-docker run -p 50001:50001 \
+docker run -p 50001:50001 -p 443:443 \
    -e ADMIN_USERNAME=usernamexxx \
    -e ADMIN_PASSWORD=passwordxxx \
    dairoot/chatgpt-mirror
-
-
-# 使用 caddy 开启https （首页需要 https 才可以访问）
-caddy run --adapter caddyfile --config <(echo 'localhost:443 {\n reverse_proxy * http://127.0.0.1:50001 \n}')
 
 访问: https://localhost
 ```
