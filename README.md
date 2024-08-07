@@ -43,7 +43,7 @@ docker run -p 50001:50001 \
    dairoot/chatgpt-mirror
 
 
-# 使用 caddy 作为反向代理，将 443 端口转发到 50001 端口 (开启https)
+# 使用 caddy 开启https （首页需要 https 才可以访问）
 caddy run --adapter caddyfile --config <(echo 'localhost:443 {\n reverse_proxy * http://127.0.0.1:50001 \n}')
 
 访问: https://localhost
