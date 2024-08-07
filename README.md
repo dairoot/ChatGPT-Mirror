@@ -30,7 +30,9 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 </a>
 -->
 
-## 本地运行
+## 部署
+
+### 1. 本地运行
 
 ```bash
 # 本地需要翻墙
@@ -38,16 +40,14 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 docker pull dairoot/chatgpt-mirror
 
 docker run -p 50001:50001 -p 443:443 \
-   -e ADMIN_USERNAME=usernamexxx \
-   -e ADMIN_PASSWORD=passwordxxx \
+   -e ADMIN_USERNAME=dairoot \
+   -e ADMIN_PASSWORD=dairoot \
    dairoot/chatgpt-mirror
 
 访问: https://localhost
 ```
 
-## 部署到服务器（海外 vps）
-
-#### 1. 运行
+### 2. 部署到服务器（海外 vps）
 
 ```bash
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
@@ -62,7 +62,17 @@ docker compose pull # 拉取镜像
 docker compose up -d # 后台运行
 ```
 
-#### 2. 若需要配置 ChatGPT 聊天页面，请点击查看[完整部署流程](./docs/deploy.md)
+若需要配置 ChatGPT 聊天页面，请点击查看[完整部署流程](./docs/deploy.md)
+
+### 3. 使用 Zeabur 部署 （免费但卡）
+
+管理后台默认账号密码为：dairoot
+
+修改 `Zeabur` 环境变量，即可更改管理后台账号密码
+
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/ZEUVRY?referralCode=dairoot)
+
+---
 
 ## 环境变量
 
