@@ -64,11 +64,11 @@ docker compose up -d # 后台运行
 
 若需要配置 ChatGPT 聊天页面，请点击查看[完整部署流程](./docs/deploy.md)
 
-### 3. 使用 Zeabur 部署 （免费但卡）
+### 3. 使用 Zeabur 部署 （免服务器）
 
-管理后台默认账号密码为：dairoot
+管理后台 默认账号密码为：dairoot
 
-修改 `Zeabur` 环境变量，即可更改管理后台账号密码
+在 `Zeabur` 后台修改环境变量，即可更改 管理后台 账号密码
 
 [![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/ZEUVRY?referralCode=dairoot)
 
