@@ -3,7 +3,7 @@
 [![Docker](https://img.shields.io/docker/pulls/dairoot/chatgpt-mirror?label=ChatGPT-Mirror&logo=docker)](https://hub.docker.com/r/dairoot/chatgpt-mirror)
 [![License](https://img.shields.io/github/license/dairoot/ChatGPT-Mirror)](https://github.com/dairoot/ChatGPT-Mirror/blob/main/LICENSE)
 
-ChatGPT Mirror 后台是一个 ChatGPT 镜像网站，允许多账号共享管理。实现多人同时使用 ChatGPT 服务。
+ChatGPT Mirror 后台是一个 ChatGPT 镜像站，允许多账号共享管理。实现多人同时使用 ChatGPT 服务。
 
 ## 特点
 
@@ -16,9 +16,6 @@ ChatGPT Mirror 后台是一个 ChatGPT 镜像网站，允许多账号共享管�
 ## 在线体验
 
 https://chatgpt.dairoot.cn
-
-- 账号：dairoot
-- 密码：dairoot
 
 为了获得最佳体验，请先观看以下视频教程
 
@@ -87,13 +84,13 @@ docker compose up -d # 后台运行
   <tr align="left">
     <td rowspan="2">管理后台</td>
     <td><code>ADMIN_USERNAME</code></td>
-    <td><code>string</code></td>
+    <td><code>String</code></td>
     <td><code>None</code></td>
     <td>管理后台账号</td>
   </tr>
   <tr align="left">
     <td><code>ADMIN_PASSWORD</code></td>
-    <td><code>string</code></td>
+    <td><code>String</code></td>
     <td><code>None</code></td>
     <td>管理后台密码</td>
   </tr>
@@ -106,7 +103,7 @@ docker compose up -d # 后台运行
   </tr>
   <tr align="left">
     <td><code>MIRROR_API_PREFIX</code></td>
-    <td><code>string</code></td>
+    <td><code>String</code></td>
     <td><code>None</code></td>
     <td>API 访问前缀，建议配置</td>
   </tr>
@@ -115,6 +112,19 @@ docker compose up -d # 后台运行
     <td><code>Boolean</code></td>
     <td><code>false</code></td>
     <td>开启临时聊天（不保存聊天记录）</td>
+  </tr>
+   <tr align="left">
+    <td rowspan="3">系统变量</td>
+    <td><code>HTTP_PROXY</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>http 代理地址</td>
+  </tr>
+  <tr align="left">
+    <td><code>SOCKS5_PROXY</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>socks5 代理地址</td>
   </tr>
 </table>
 
