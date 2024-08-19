@@ -82,7 +82,7 @@ docker compose up -d # 后台运行
     <th>描述</th>
   </tr>
   <tr align="left">
-    <td rowspan="2">管理后台</td>
+    <td rowspan="3">管理后台</td>
     <td><code>ADMIN_USERNAME</code></td>
     <td><code>String</code></td>
     <td><code>None</code></td>
@@ -93,6 +93,12 @@ docker compose up -d # 后台运行
     <td><code>String</code></td>
     <td><code>None</code></td>
     <td>管理后台密码</td>
+  </tr>
+    <tr align="left">
+    <td><code>USE_SERVER_RENDER</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>true</code></td>
+    <td>服务端托管 Proofofwork</td>
   </tr>
   <tr align="left">
     <td rowspan="3">API 相关</td>

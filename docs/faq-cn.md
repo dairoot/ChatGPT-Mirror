@@ -7,18 +7,19 @@ chatgpt.com
 正在验证您是否是真人。这可能需要几秒钟时间。
 ```
 
-- 更换服务器 IP 解决（简单方便）
-- 使用代理，配置环境变量（HTTP_PROXY、 SOCKS5_PROXY）
+1. 更换服务器 IP 解决（简单方便）
+2. 使用代理，配置环境变量（HTTP_PROXY、 SOCKS5_PROXY）
 
 ```bash
 # 验证代理是否有效。启动程序后，核对返回的 ip 是否为代理 ip
 curl -s http://127.0.0.1:50001/test?username=管理后台账号
 ```
 
-- 使用 warp 代理（不一定能成功）
-  1. 全局模式：手动安装 warp 客户端
-     [ygkkk/CFwarp](https://gitlab.com/rwkgyg/CFwarp) 或 [fscarmen/warp-sh](https://github.com/fscarmen/warp-sh)
-  2. 局部模式：使用 docker 安装
+3. 使用 warp 代理（不一定能成功）
+
+- 全局模式：手动安装 warp 客户端
+  [ygkkk/CFwarp](https://gitlab.com/rwkgyg/CFwarp) 或 [fscarmen/warp-sh](https://github.com/fscarmen/warp-sh)
+- 局部模式：使用 docker 安装
 
 ```bash
 docker compose -f docker-compose-warp.yml up
