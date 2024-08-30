@@ -97,7 +97,7 @@ docker compose up -d # 后台运行
     <tr align="left">
     <td><code>USE_SERVER_RENDER</code></td>
     <td><code>Boolean</code></td>
-    <td><code>true</code></td>
+    <td><code>false</code></td>
     <td>服务端托管 Proofofwork</td>
   </tr>
   <tr align="left">
