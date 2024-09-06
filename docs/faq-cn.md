@@ -44,4 +44,6 @@ curl -s http://127.0.0.1:50001/test?username=管理后台账号
 
 - 验证码通常情况下只会出现一次。
 
+- 如果多次出现验证码，请尝试修改环境变量 `USE_SERVER_RENDER=true`，并重新启动程序 `./deploy.sh`。
+
 - 使用付费的 [capsolver](https://dashboard.capsolver.com/passport/register?inviteCode=GT8NyMFVF0bG) 方案（待接入）

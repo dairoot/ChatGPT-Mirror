@@ -52,11 +52,11 @@ cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
 
 cd ChatGPT-Mirror/
 
-cp .env.example .env && vi .env # 修改管理后台账号密码
+# 修改管理后台账号密码
+cp .env.example .env && vi .env
 
-docker compose pull # 拉取镜像
-
-docker compose up -d # 后台运行
+# 启动
+./deploy.sh
 ```
 
 若需要配置 ChatGPT 聊天页面，请点击查看[完整部署流程](./docs/deploy.md)
