@@ -149,7 +149,7 @@ API 地址为：https://你的域名/上述环境变量配置的MIRROR_API_PREFI
 参数详情
 | 字段 | 类型 | 默认值 | 必填 | 描述 |
 | --- | --- | --- |--- |--- |
-| `model` | `string` | `None` | `是` |模型名称 <br> `gpt-4o-mini` `gpt-4o` `gpt-4` `gpt-4-mobile`|
+| `model` | `string` | `None` | `是` |模型名称 <br> `gpt-4o-mini` `gpt-4o` `gpt-4` `gpt-4-mobile` <br> `o1-mini` `o1-preview`|
 | `messages` | `array` | `None` | `是` |消息内容 |
 | `stream` | `boolean` | `None` | `是` |是否流式返回 |
 | `conversation_id` | `string` |`自动匹配` | `否` | 会话 ID |

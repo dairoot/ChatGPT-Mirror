@@ -10,14 +10,14 @@ cd ChatGPT-Mirror/
 
 cp .env.example .env && vi .env # 修改管理后台账号密码
 
-docker compose pull # 拉取镜像
-
-docker compose up -d # 后台运行
+./deploy.sh
 ```
 
 #### 2.1 配置 nginx （需要配置 https）
 
-```bash
+```conf
+proxy_cache_path /etc/nginx/cache/chatgpt levels=1:2 keys_zone=chatgpt_cache:20m inactive=1d max_size=5g;
+
 upstream chatgpt {
     server 127.0.0.1:50001;
     # server 127.0.0.1:50002;
@@ -28,15 +28,34 @@ server {
     listen              [::]:443 ssl http2;
     server_name         chatgpt.example.com;
 
-    # SSL 文件
+    # SSL 文件 START
     ssl_certificate     /etc/nginx/ssl/chatgpt.example.com/fullchain.crt;
     ssl_certificate_key /etc/nginx/ssl/chatgpt.example.com/private.pem;
+    # SSL 文件 END
+
+    # GLOBAL-CACHE START
+    location ~* \.(js|css)$ {
+        proxy_cache chatgpt_cache;
+        proxy_cache_valid 200 60m;   # 对状态码200的响应缓存60分钟
+
+        # 设置静态文件的缓存控制，浏览器缓存控制
+        expires 7d;
+
+        # 添加响应头部
+        add_header X-Cache-Status $upstream_cache_status;
+
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_pass http://chatgpt;
+    }
+    # GLOBAL-CACHE END
 
 
-    # 日志文件
+    # 日志文件 START
     # access_log /data/logs/ngx.chatgpt.access.log json_combined;
     access_log /data/logs/ngx.chatgpt.access.log;
     error_log /data/logs/ngx.chatgpt.error.log;
+    # 日志文件 END
 
 
     location / {
