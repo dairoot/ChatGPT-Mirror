@@ -1,0 +1,14 @@
+asgiref==3.8.1
+certifi==2024.8.30
+charset-normalizer==3.3.2
+Django==5.1.1
+django-simpleui==2024.8.28
+djangorestframework==3.15.2
+idna==3.10
+PyJWT==2.9.0
+requests==2.32.3
+setuptools==75.1.0
+sqlparse==0.5.1
+urllib3==2.2.3
+wheel==0.37.1
+django-crontab==0.7.1

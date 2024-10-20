@@ -4,25 +4,35 @@
 
 ```bash
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
-cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
+cd /home/ && git clone -b dev https://github.com/dairoot/ChatGPT-Mirror.git
+
+git checkout dev
 
 cd ChatGPT-Mirror/
 
-cp .env.example .env && vi .env # 修改管理后台账号密码
+# 修改管理后台账号密码
+cp .env.example .env && vi .env
 
+# 启动
 ./deploy.sh
 ```
 
-#### 2.1 配置 nginx （需要配置 https）
+#### 配置 nginx (可以不配置 https， 但推荐配置)
 ⚠️ 记得将 `chatgpt.example.com` 替换为自己域名，总有人忘记
 
-```conf
-proxy_cache_path /etc/nginx/cache/chatgpt levels=1:2 keys_zone=chatgpt_cache:20m inactive=1d max_size=5g;
+```
+# 创建缓存目录
+mkdir -p /etc/nginx/cache/newchat
 
-upstream chatgpt {
-    server 127.0.0.1:50001;
-    # server 127.0.0.1:50002;
-}
+cd /etc/nginx/conf.d/ && vi chatgpt.conf (贴以下配置)
+# 校验配置是否正确，并加载配置
+nginx -t
+nginx -s reload
+```
+
+##### 配置一
+```nginx
+proxy_cache_path /etc/nginx/cache/newchat levels=1:2 keys_zone=newchat_cache:20m inactive=1d max_size=5g;
 
 server {
     listen              443 ssl http2;
@@ -36,7 +46,7 @@ server {
 
     # GLOBAL-CACHE START
     location ~* \.(js|css)$ {
-        proxy_cache chatgpt_cache;
+        proxy_cache newchat_cache;
         proxy_cache_valid 200 60m;   # 对状态码200的响应缓存60分钟
 
         # 设置静态文件的缓存控制，浏览器缓存控制
@@ -47,7 +57,10 @@ server {
 
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_pass http://chatgpt;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+
+        proxy_pass http://127.0.0.1:50002;
     }
     # GLOBAL-CACHE END
 
@@ -62,7 +75,10 @@ server {
     location / {
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_pass http://chatgpt;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+
+        proxy_pass http://127.0.0.1:50002;
     }
 
 
@@ -77,15 +93,11 @@ server {
 }
 ```
 
-#### 2.2 如果使用 `cloudflare` 小黄云代理，则无需 https。nginx 配置如下
+##### 配置二、 使用 `cloudflare` 小黄云代理，则无需 https。
 
-```bash
-proxy_cache_path /etc/nginx/cache/chatgpt levels=1:2 keys_zone=chatgpt_cache:20m inactive=1d max_size=5g;
+```nginx
+proxy_cache_path /etc/nginx/cache/newchat levels=1:2 keys_zone=newchat_cache:20m inactive=1d max_size=5g;
 
-upstream chatgpt {
-    server 127.0.0.1:50001;
-    # server 127.0.0.1:50002;
-}
 
 server {
     listen              80;
@@ -93,7 +105,7 @@ server {
 
     # GLOBAL-CACHE START
     location ~* \.(js|css)$ {
-        proxy_cache chatgpt_cache;
+        proxy_cache newchat_cache;
         proxy_cache_valid 200 60m;   # 对状态码200的响应缓存60分钟
 
         # 设置静态文件的缓存控制，浏览器缓存控制
@@ -104,7 +116,7 @@ server {
 
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_pass http://chatgpt;
+        proxy_pass http://127.0.0.1:50002;
     }
     # GLOBAL-CACHE END
 
@@ -119,9 +131,7 @@ server {
     location / {
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_pass http://chatgpt;
+        proxy_pass http://127.0.0.1:50002;
     }
 }
 ```
-
-- 小白用户可以使用宝塔面板进行部署，具体教程请参考：[如何安装 ChatGPT 镜像](https://dairoot.cn/2024/07/02/install-chatgpt-mirror/)。

@@ -1,16 +1,39 @@
 services:
-  worker:
-    image: dairoot/chatgpt-mirror:latest
-    volumes:
-      - chatgpt_data:/app/worker/.wrangler
+  web:
+    # build: .
+    image: dairoot/chatgpt-mirror:dev
 
     env_file:
       - .env
-
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787
     ports:
-      - "50001:50001"
+      - "50002:50002"
+    depends_on:
+      - gateway
+    volumes:
+      - chatgpt_mirror_db:/app/backend/db/
+      - ./backend/logs:/app/backend/logs
 
     restart: always
 
+  gateway:
+    image: dairoot/chatgpt-gateway:v0.0.1
+    # ports:
+    #   - "8787:8787"
+    deploy:
+      replicas: 1 # 账号数量多时可+1
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+
+  redis:
+    image: redis:latest
+    restart: always
+
 volumes:
-  chatgpt_data:
+  chatgpt_mirror_db:

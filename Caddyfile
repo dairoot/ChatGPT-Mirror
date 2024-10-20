@@ -1,0 +1,30 @@
+:50002 {
+
+	vars hscheme {http.request.scheme}
+	@has_proto_header header X-Forwarded-Proto *
+	vars @has_proto_header hscheme {http.request.header.X-Forwarded-Proto}
+
+
+	handle /admin/* {
+		uri strip_prefix /admin
+		file_server
+		root * ./frontend/dist/
+		try_files {path} /index.html
+	}
+
+	handle /0x/* {
+		reverse_proxy 127.0.0.1:8000 {
+			header_up X-Forwarded-Proto {vars.hscheme}
+        }
+	}
+
+
+
+	handle /* {
+
+		reverse_proxy gateway:8787 {
+			header_up X-Forwarded-Proto {vars.hscheme}
+        }
+	}
+
+}
