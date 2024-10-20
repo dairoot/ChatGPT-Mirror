@@ -38,7 +38,7 @@ https://your_domain/api/check-proxy?admin_password=your_admin_password
 如果代理状态为200，则为成功
 
 
-##### 方案三. 使用代理池
+#### 方案三. 使用代理池
 ```bash
 vi .env
 
