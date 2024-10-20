@@ -6,9 +6,7 @@
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
 cd /home/ && git clone -b dev https://github.com/dairoot/ChatGPT-Mirror.git
 
-git checkout dev
-
-cd ChatGPT-Mirror/
+cd ChatGPT-Mirror/ && git checkout dev
 
 # 修改管理后台账号密码
 cp .env.example .env && vi .env
