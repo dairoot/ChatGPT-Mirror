@@ -130,8 +130,10 @@ server {
     location / {
         proxy_redirect off;
         proxy_set_header Host $host;
-        proxy_pass http://127.0.0.1:50002;
         proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+
+        proxy_pass http://127.0.0.1:50002;
     }
 }
 ```
