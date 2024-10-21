@@ -1,5 +1,5 @@
 # 常见问题
-
+--- 
 ## 一、 为什么首页会提示 403
 
 ```
@@ -10,6 +10,7 @@ chatgpt.com
 ### 以下三个个方案，多试试，总有一个方案适合你
 
 #### 方案一. 更换服务器 IP 解决（简单方便）
+[腾讯云](https://curl.qcloud.com/0JAXkoF1) 选择欧美区域
 
 #### 方案二. 使用 warp 代理（不一定能成功）
 
@@ -50,12 +51,13 @@ PROXY_URL_POOL=http://username@password@ip:port,socks5://username@password@ip:po
 ```
 查看代理配置是否有效（同warp验证流程）
 
-
+--- 
 
 ## 二、 为什么向 ChatGPT 提问时无法解析 URL 链接和文件，而官网可以
 
 这是由于 IP 受到 ChatGPT 功能限制，可以通过更换 IP 解决。或者尝试发送一张照片，激活chatgpt功能。
 
+--- 
 
 ## 三、 为什么向 ChatGPT 提问会出现验证码
 
