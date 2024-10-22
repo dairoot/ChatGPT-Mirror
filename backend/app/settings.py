@@ -225,7 +225,7 @@ DJANGO_ENV = os.environ.get("DJANGO_ENV")
 
 if DJANGO_ENV == "PRODUCTION":
     # 生产环境
-    print("beta environment")
+    print("PRODUCTION environment")
     from app.config.production import *
 
 

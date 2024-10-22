@@ -3,6 +3,8 @@ cd /app
 
 caddy start --config /app/Caddyfile --adapter caddyfile
 
+crond
+
 cd /app/backend
 
 python manage.py migrate 
