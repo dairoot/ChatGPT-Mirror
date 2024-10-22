@@ -14,5 +14,5 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 log_file_path = os.path.join(BASE_DIR, os.pardir, 'logs/cron.log')
 
 CRONJOBS = [
-    ('*/1 * * * *', 'app.cron.update_token', f'>> {log_file_path} 2>&1'),
+    ('*/1 * * * *', 'app.cron.update_token', f'>> {log_file_path}'),
 ]
