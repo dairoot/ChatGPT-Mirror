@@ -1,0 +1,9 @@
+services:
+  cf5s:
+    image: dairoot/cf5s:latest
+    restart: always
+
+    env_file:
+      - .env
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787

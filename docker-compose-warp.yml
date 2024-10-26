@@ -1,22 +1,4 @@
 services:
-  worker:
-    image: dairoot/chatgpt-mirror:latest
-    volumes:
-      - chatgpt_data:/app/worker/.wrangler
-
-    env_file:
-      - .env
-
-    ports:
-      - "50001:50001"
-
-    restart: always
-    depends_on:
-      - warp
-
-    environment:
-      - SOCKS5_PROXY=socks5://warp:1080
-
   warp:
     image: caomingjun/warp
     container_name: warp
@@ -33,6 +15,3 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     volumes:
       - ./data:/var/lib/cloudflare-warp
-
-volumes:
-  chatgpt_data:

@@ -1,4 +1,11 @@
+frontend/dist/
+frontend/node_modules/
 
-admin/
-.env
-.DS_Store
+
+__pycache__/
+backend/db/*
+backend/static/
+backend/.idea/
+backend/logs/*
+
+/.env
