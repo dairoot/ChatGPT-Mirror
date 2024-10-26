@@ -4,6 +4,9 @@
 	@has_proto_header header X-Forwarded-Proto *
 	vars @has_proto_header hscheme {http.request.header.X-Forwarded-Proto}
 
+ 	handle_path /admin {
+        redir * /admin/ permanent
+    }
 
 	handle /admin/* {
 		uri strip_prefix /admin
