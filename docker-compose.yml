@@ -1,6 +1,7 @@
 services:
   worker:
-    image: dairoot/chatgpt-mirror:latest
+    image: dairoot/chatgpt-mirror:v0.0.7
+
     volumes:
       - chatgpt_data:/app/worker/.wrangler
 

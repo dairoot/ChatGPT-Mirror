@@ -4,7 +4,7 @@
 
 ```bash
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
-cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
+cd /home/ && git clone -b v0.0.1 https://github.com/dairoot/ChatGPT-Mirror.git
 
 cd ChatGPT-Mirror/
 

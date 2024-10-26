@@ -36,7 +36,7 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 ```bash
 # 本地需要翻墙
 
-docker pull dairoot/chatgpt-mirror
+docker pull dairoot/chatgpt-mirror:v0.0.7
 
 docker run -p 50001:50001 -p 443:443 \
    -e ADMIN_USERNAME=dairoot \
@@ -50,7 +50,7 @@ docker run -p 50001:50001 -p 443:443 \
 
 ```bash
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
-cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
+cd /home/ && git clone -b v0.0.1 https://github.com/dairoot/ChatGPT-Mirror.git
 
 cd ChatGPT-Mirror/
 
