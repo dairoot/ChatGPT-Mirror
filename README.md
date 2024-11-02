@@ -35,7 +35,7 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
 cd /home/ && git clone https://github.com/dairoot/ChatGPT-Mirror.git
 
-cd ChatGPT-Mirror/ && git checkout
+cd ChatGPT-Mirror/
 
 # 修改管理后台账号密码
 cp .env.example .env && vi .env
@@ -46,7 +46,7 @@ cp .env.example .env && vi .env
 访问 http://localhost:50002
 ```
 
-服务端部署，请点击查看[完整部署流程](./docs/deploy.md)
+配置域名，请点击查看[完整部署流程](./docs/deploy.md)
 
 ## 环境变量
 
