@@ -15,7 +15,7 @@ class ChatGPTAccountEnum(APIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get(self, request):
-        result = ChatgptAccount.objects.order_by("-id").values("id", "chatgpt_username", "plan_type").all()
+        result = ChatgptAccount.objects.filter(auth_status=True).order_by("-id").values("id", "chatgpt_username", "plan_type").all()
         return Response({"data": result})
 
 
@@ -33,6 +33,7 @@ class ChatGPTAccountView(generics.ListCreateAPIView):
             if not chatgpt_token:
                 continue
             res_json = req_gateway("post", url, json={"chatgpt_token": chatgpt_token})
+            res_json["auth_status"] = True
 
             ChatgptAccount.save_data(res_json)
 
@@ -66,7 +67,7 @@ class ChatGPTLoginView(APIView):
             "isolated_session": request.user.isolated_session,
             "limits": request.user.model_limit
         }
-        print(payload)
+        # print(payload)
         res_json = req_gateway("post", url, json=payload)
 
         save_visit_log(request, "choose-gpt", chatgpt.chatgpt_username)

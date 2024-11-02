@@ -16,5 +16,6 @@ log_file_path = os.path.join(BASE_DIR, os.pardir, 'logs/cron.log > /dev/null 2>&
 
 
 CRONJOBS = [
-    ('*/5 * * * *', 'app.cron.update_token', f'>> {log_file_path}'),
+    ('*/5 * * * *', 'app.cron.check_access_token', f'>> {log_file_path}'),
+    ('*/5 * * * *', 'app.cron.update_access_token', f'>> {log_file_path}'),
 ]

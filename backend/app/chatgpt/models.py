@@ -32,8 +32,13 @@ class ChatgptAccount(models.Model):
         new_obj.chatgpt_username = data["user_info"]["email"]
         new_obj.plan_type = data["user_info"]["plan_type"]
         new_obj.access_token = data["access_token"]
+
+        if data.get("auth_status") is not None:
+            new_obj.auth_status = data["auth_status"]
+
         if data.get("session_token"):
             new_obj.session_token = data["session_token"]
+
         if data.get("refresh_token"):
             new_obj.refresh_token = data["refresh_token"]
 

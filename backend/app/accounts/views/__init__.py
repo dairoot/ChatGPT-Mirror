@@ -10,7 +10,6 @@ from app.accounts.serializers import ShowVisitLogModelSerializer, AddUserAccount
 from app.chatgpt.models import ChatgptAccount, ChatgptCar
 from app.page import DefaultPageNumberPagination
 from app.settings import ADMIN_USERNAME
-from app.utils import generate_md5
 
 
 class UserChatGPTAccountList(APIView):
@@ -22,13 +21,13 @@ class UserChatGPTAccountList(APIView):
         for line in ChatgptCar.objects.filter(id__in=request.user.gptcar_list).values("gpt_account_list"):
             chatgpt_account_list.extend(line["gpt_account_list"])
 
-        gptaccount = ChatgptAccount.objects
+        gptaccount = ChatgptAccount.objects.filter(auth_status=True)
         if chatgpt_account_list:
             gptaccount = gptaccount.filter(id__in=chatgpt_account_list)
         for line in gptaccount.all():
             results.append({
                 "id": line.id,
-                "chatgpt_flag": "{}{}".format(line.id,generate_md5(line.chatgpt_username)[:5]),
+                "chatgpt_flag": "{:03}{}".format(line.id, line.chatgpt_username[:3]),
                 "plan_type": line.plan_type
             })
 
