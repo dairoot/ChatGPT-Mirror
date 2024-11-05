@@ -18,7 +18,7 @@ services:
     restart: always
 
   gateway:
-    image: dairoot/chatgpt-gateway:v0.0.1
+    image: dairoot/chatgpt-gateway:latest
     # ports:
     #   - "8787:8787"
     deploy:
