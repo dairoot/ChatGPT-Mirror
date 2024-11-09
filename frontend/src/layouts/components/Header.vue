@@ -174,7 +174,7 @@ const handleLogout = () => {
 };
 
 const navToGitHub = () => {
-  // window.open('https://github.com/dairoot/ChatGPT-Mirror');
+  window.open('https://github.com/dairoot/ChatGPT-Mirror');
 };
 </script>
 <style lang="less" scoped>

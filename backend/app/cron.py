@@ -12,13 +12,13 @@ from app.settings import CHATGPT_GATEWAY_URL
 logger = logging.getLogger("cron")
 
 
-def _update_token(chatgpt_token):
+def _update_token(chatgpt_username, chatgpt_token):
     url = CHATGPT_GATEWAY_URL + "/api/get-user-info"
     headers = {"Authorization": "Bearer {}".format(ADMIN_PASSWORD)}
     res = requests.post(url, headers=headers, json={"chatgpt_token": chatgpt_token})
     res_json = res.json()
     if res.status_code == 400:
-        print("res_json", res_json)
+        print("res_json", chatgpt_username, res_json)
         return False
 
     res_json["auth_status"] = True
@@ -37,13 +37,13 @@ def update_access_token():
 
 
         if line.refresh_token:
-            update_status = _update_token(line.refresh_token)
+            update_status = _update_token(line.chatgpt_username, line.refresh_token)
             if not update_status:
                 # line.refresh_token = None
                 line.save()
 
         elif line.session_token:
-            update_status = _update_token(line.session_token)
+            update_status = _update_token(line.chatgpt_username, line.session_token)
             if not update_status:
                 # line.session_token = None
                 line.save()
@@ -54,7 +54,7 @@ def check_access_token():
     need_to_update = int(time.time() - 3600)
     for line in ChatgptAccount.objects.filter(updated_time__lte=need_to_update, auth_status=True).all():
         if line.access_token:
-            if not _update_token(line.access_token):
+            if not _update_token(line.chatgpt_username, line.access_token):
                 line.auth_status = False
                 line.updated_time = int(time.time())
                 line.save()
@@ -62,3 +62,6 @@ def check_access_token():
                 return
             else:
                 logger.warning(f"access_token 有效: {line.chatgpt_username}")
+
+
+

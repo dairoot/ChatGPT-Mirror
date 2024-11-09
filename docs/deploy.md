@@ -15,6 +15,9 @@ cp .env.example .env && vi .env
 ./deploy.sh
 ```
 
+- 具体教程请参考：[如何安装 ChatGPT 镜像](https://dairoot.cn/2024/07/02/install-chatgpt-mirror/)。
+
+
 2. #### 配置 nginx (可以不配置 https， 但推荐配置)
    ⚠️ 记得将 `chatgpt.example.com` 替换为自己域名，总有人忘记
 
@@ -49,6 +52,9 @@ server {
     error_log /data/logs/ngx.chatgpt.error.log;
     # 日志文件 END
 
+    client_header_buffer_size 4k;
+    large_client_header_buffers 8 16k;
+
 
     location / {
         proxy_redirect off;
@@ -57,6 +63,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $http_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+
         proxy_pass http://127.0.0.1:50002;
     }
 
@@ -85,6 +92,9 @@ server {
     access_log /data/logs/ngx.chatgpt.access.log;
     error_log /data/logs/ngx.chatgpt.error.log;
     # 日志文件 END
+
+    client_header_buffer_size 4k;
+    large_client_header_buffers 8 16k;
 
 
     location / {

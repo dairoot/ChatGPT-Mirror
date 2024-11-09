@@ -35,7 +35,7 @@ PROXY_URL_POOL=socks5://warp:1080
 查看代理配置是否有效
 
 ```bash
-curl  http://127.0.0.1:50002/api/check-proxy?admin_password=your_admin_password
+curl  http://127.0.0.1:50002/api/check-proxy?admin_password=环境变量中的ADMIN_PASSWORD
 
 ```
 

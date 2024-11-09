@@ -7,9 +7,28 @@ from rest_framework.views import APIView
 from app.accounts.models import User, VisitLog
 from app.accounts.serializers import ShowVisitLogModelSerializer, AddUserAccountSerializer, UserBindChatGPTSerializer, \
     ShowUserAccountModelSerializer, BatchModelLimitSerializer
-from app.chatgpt.models import ChatgptAccount, ChatgptCar
+from app.chatgpt.models import ChatgptAccount
 from app.page import DefaultPageNumberPagination
 from app.settings import ADMIN_USERNAME
+from app.utils import req_gateway
+
+
+class GetMirrorToken(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = User.objects.filter(id=request.GET["user_id"]).first()
+
+        user_account_list = ChatgptAccount.get_by_gptcar_list(user.gptcar_list)
+        chatgpt_username_list = [i.chatgpt_username for i in user_account_list]
+        res = req_gateway("post", "/api/get-mirror-token", json={
+            "chatgpt_list": chatgpt_username_list,
+            "user_name": user.username,
+        })
+        for line in res:
+            obj = ChatgptAccount.objects.filter(chatgpt_username=line["chatgpt_username"]).first()
+            line["auth_status"] = obj.auth_status
+        return Response(res)
 
 
 class UserChatGPTAccountList(APIView):
@@ -17,18 +36,13 @@ class UserChatGPTAccountList(APIView):
 
     def get(self, request):
         results = []
-        chatgpt_account_list = []
-        for line in ChatgptCar.objects.filter(id__in=request.user.gptcar_list).values("gpt_account_list"):
-            chatgpt_account_list.extend(line["gpt_account_list"])
-
-        gptaccount = ChatgptAccount.objects.filter(auth_status=True)
-        if chatgpt_account_list:
-            gptaccount = gptaccount.filter(id__in=chatgpt_account_list)
-        for line in gptaccount.all():
+        user_account_list = ChatgptAccount.get_by_gptcar_list(request.user.gptcar_list)
+        for line in user_account_list:
             results.append({
                 "id": line.id,
                 "chatgpt_flag": "{:03}{}".format(line.id, line.chatgpt_username[:3]),
-                "plan_type": line.plan_type
+                "plan_type": line.plan_type,
+                "auth_status": line.auth_status,
             })
 
         return Response({"results": results})
@@ -60,9 +74,19 @@ class UserRelateGPTCarView(APIView):
 
 class UserAccountView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
-    queryset = User.objects.order_by("-id").all()
-    serializer_class = ShowUserAccountModelSerializer
-    pagination_class = DefaultPageNumberPagination
+
+    def get(self, request, *args, **kwargs):
+        queryset = User.objects.order_by("-id").all()
+        pg = DefaultPageNumberPagination()
+        pg.page_size_query_param = "page_size"
+        page_accounts = pg.paginate_queryset(queryset, request=request)
+        username_list = [i.username for i in page_accounts]
+        try:
+            use_count_dict = req_gateway("post", "/api/get-user-use-count", json={"username_list": username_list})
+        except:
+            use_count_dict = {}
+        serializer = ShowUserAccountModelSerializer(instance=page_accounts, use_count_dict=use_count_dict, many=True)
+        return pg.get_paginated_response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         # 添加或更新用户

@@ -27,6 +27,20 @@
           <t-tag v-if="row.auth_status === true" theme="success" variant="light"> 运行中 </t-tag>
         </template>
 
+        <template #use_count="{ row }">
+          <t-space>
+            <div v-for="(v, k) in row.use_count" :key="k">
+              <t-tag v-if="k.toString().includes('h')">
+                <t-space>
+                  <span style="color: #0052c1">{{ k.toString().substring(5, 7) }}:</span>
+                  <span>{{ v }}</span>
+                </t-space>
+              </t-tag>
+              <!-- <t-tag theme="primary" variant="light">{{ k.toString().substring(5, 7) }}: {{ v }}</t-tag> -->
+            </div>
+          </t-space>
+        </template>
+
         <template #expires_at="{ row }">
           {{ TimestampToDate(row.expires_at) }}
         </template>
@@ -138,9 +152,11 @@ const rehandlePageChange = (curr: any) => {
 
 const columns: TableProps['columns'] = [
   { colKey: 'row-select', type: 'multiple' },
-  { colKey: 'chatgpt_username', title: 'ChatGPT 账号', width: 220 },
+  { colKey: 'id', title: 'ID', width: 50 },
+  { colKey: 'chatgpt_username', title: 'ChatGPT 账号', width: 220, fixed: 'left' },
   { colKey: 'auth_status', title: '状态', width: 100 },
   { colKey: 'plan_type', title: '类型', width: 100 },
+  { colKey: 'use_count', title: '近期用量', width: 350 },
   { colKey: 'access_token_exp', title: 'Access Token 过期时间', width: 200 },
   { colKey: 'created_time', title: '创建时间', width: 200 },
   // { colKey: 'updated_at', title: '最近更新时间', width: 200 },

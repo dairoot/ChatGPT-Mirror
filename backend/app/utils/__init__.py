@@ -7,19 +7,19 @@ from rest_framework.exceptions import ValidationError
 
 from app.accounts.models import VisitLog
 from app.settings import ADMIN_PASSWORD
-
-
+from app.settings import CHATGPT_GATEWAY_URL
 def generate_md5(input_string):
     md5_object = hashlib.md5()
     md5_object.update(input_string.encode('utf-8'))
     return md5_object.hexdigest()
 
 
-def req_gateway(method, url, *args, **kwargs):
+def req_gateway(method, uri, *args, **kwargs):
+    url = CHATGPT_GATEWAY_URL + uri
     headers = {
         "Authorization": "Bearer {}".format(ADMIN_PASSWORD),
     }
-    res = requests.request(method, url, headers=headers, *args, **kwargs)
+    res = requests.request(method, url, headers=headers, *args, **kwargs, allow_redirects=False)
     if res.status_code != 200:
         raise ValidationError(res.text)
 

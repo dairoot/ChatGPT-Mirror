@@ -45,6 +45,10 @@
           {{ row.last_login }}
         </template>
 
+        <template #chatgpt_count="{ row }">
+          <t-link theme="primary" @click="getChatGPTDetails(row)">已绑定: {{ row.chatgpt_count }} 个</t-link>
+        </template>
+
         <template #isolated_session="{ row }">
           <t-switch :value="row.isolated_session" :custom-value="[true, false]">
             <!--             @change="(value) => changeIsolatedSession(row, Number(value))" -->
@@ -59,6 +63,34 @@
           </t-space>
         </template>
       </t-table>
+
+      <!-- chatgpt 账号 -->
+      <t-dialog
+        v-model:visible="showChatGPTDetailsDialog"
+        title="ChatGPT 账号详情"
+        width="950px"
+        :cancel-btn="null"
+        :confirm-btn="null"
+      >
+        <!-- tableChatgptDetailsData -->
+        <t-table
+          :data="tableChatgptDetailsData"
+          :columns="columnsChatgptDetails"
+          row-key="chatgpt_username"
+          :loading="tableLoading"
+          bordered
+          hover
+        >
+          <template #auth_status="{ row }">
+            <t-tag v-if="row.auth_status === false" theme="danger" variant="light"> 已过期 </t-tag>
+            <t-tag v-if="row.auth_status === true" theme="success" variant="light"> 运行中 </t-tag>
+          </template>
+
+          <template #op="slotProps">
+            <t-link theme="primary" @click="handleCopyUrl(slotProps.row.mirror_token)"> 复制</t-link>
+          </template>
+        </t-table>
+      </t-dialog>
 
       <!-- 添加/编辑 用户 dialog -->
       <t-dialog v-model:visible="showDialog" :on-confirm="handleConfirm" title="新增 用户" width="800px">
@@ -265,14 +297,21 @@ interface TableData {
   user_info: string;
 }
 
+interface TableChatgptDetailsData {
+  mirror_token: string;
+  chatgpt_username: string;
+}
+
 const isGptcarListEmpty = ref(true);
 const hasModelLimit = ref(false);
 const actionType = ref('add');
 const loading = ref(false);
 const tableLoading = ref(false);
 const tableData = ref<TableData[]>([]);
+const tableChatgptDetailsData = ref<TableChatgptDetailsData[]>([]);
 const gptCarList = ref<any>([]);
 const showDialog = ref(false);
+const showChatGPTDetailsDialog = ref(false);
 const showModelLimitDialog = ref(false);
 const showDeleteDialog = ref(false);
 const usernameDelete = ref('');
@@ -306,6 +345,12 @@ const rehandlePageChange = (curr: any) => {
   getUserList();
 };
 
+const handleCopyUrl = (mirrorToken: string) => {
+  const notLoginUrl = `${window.location.origin}/api/not-login?user_gateway_token=${mirrorToken}`;
+  navigator.clipboard.writeText(notLoginUrl);
+  MessagePlugin.success('复制成功');
+};
+
 const BatcModelLimit = async () => {
   showModelLimitDialog.value = true;
 };
@@ -314,16 +359,22 @@ const onSelectChange: TableProps['onSelectChange'] = (value, _) => {
   // console.log(value, _);
 };
 
+const columnsChatgptDetails: TableProps['columns'] = [
+  { colKey: 'chatgpt_username', title: 'ChatGPT', width: 80 },
+  { colKey: 'auth_status', title: '状态', width: 30 },
+  { colKey: 'mirror_token', title: 'Mirror Token (用于 API, 该token不会变更)', width: 100 },
+  { colKey: 'op', title: '免登链接', width: 30 },
+];
+
 const columns: TableProps['columns'] = [
   { colKey: 'row-select', type: 'multiple', checkProps: ({ row }) => ({ disabled: row.username === 'free_account' }) },
   { colKey: 'is_active', title: '状态', width: 100 },
-  { colKey: 'username', title: 'title-username', width: 200 },
+  { colKey: 'username', title: 'title-username', width: 200, fixed: 'left' },
   { colKey: 'isolated_session', title: '独立会话', width: 100 },
-  { colKey: 'last_login', title: '最近登录时间', width: 200 },
-  { colKey: 'date_joined', title: '注册时间', width: 200 },
-
-  //
-  // { colKey: 'chatgpt_username', title: '绑定 ChatGPT', width: 220 },
+  { colKey: 'chatgpt_count', title: 'ChatGPT', width: 120 },
+  { colKey: 'use_count', title: '当日用量', width: 100 },
+  { colKey: 'last_login', title: '最近登录时间', width: 160 },
+  { colKey: 'date_joined', title: '注册时间', width: 160 },
   { colKey: 'remark', title: '备注', width: 200 },
   { width: 200, colKey: 'op', title: '操作' },
 ];
@@ -473,6 +524,17 @@ const batchUpdateUserModelLimit = async () => {
     showModelLimitDialog.value = false;
     MessagePlugin.success('限制成功');
   }
+};
+
+const getChatGPTDetails = async (user: any) => {
+  showChatGPTDetailsDialog.value = true;
+  tableLoading.value = true;
+  const GptDetailsUri = `/0x/user/get-mirror-token?user_id=${user.id}`;
+  const response = await RequestApi(GptDetailsUri);
+  const data = await response.json();
+  tableChatgptDetailsData.value = data;
+  tableLoading.value = false;
+  console.log(data);
 };
 
 const handleEdit = async (user: TokenUserForm) => {

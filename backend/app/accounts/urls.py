@@ -2,11 +2,12 @@
 from django.urls import path
 
 from app.accounts.views import UserAccountView, UserRelateGPTCarView, VisitLogView, BatchModelLimit, \
-    UserChatGPTAccountList
+    UserChatGPTAccountList, GetMirrorToken
 from app.accounts.views.login import AccountLogin, UserFreeLoginView, AccountRegister
 
 urlpatterns = [
     path("", UserAccountView.as_view()),
+    path("get-mirror-token", GetMirrorToken.as_view()),
     path("register", AccountRegister.as_view()),
     path("login-free", UserFreeLoginView.as_view()),
     path("chatgpt-list", UserChatGPTAccountList.as_view()),

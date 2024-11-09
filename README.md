@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/7b868672-cfaf-430c-9ec4-f1617a428225
 </a>
 -->
 
-### 1. 部署
+打开命令行终端，执行以下命令
 
 ```bash
 # 切换到 home 目录，并克隆 ChatGPT-Mirror 仓库
@@ -43,18 +43,107 @@ cp .env.example .env && vi .env
 # 启动
 ./deploy.sh
 
-访问 http://localhost:50002
 ```
+访问 http://127.0.0.1:50002 或访问 http://外网ip:50002
+
 
 配置域名，请点击查看[完整部署流程](./docs/deploy.md)
 
+
 ## 环境变量
 
-| 字段             | 类型      | 默认值  | 必填 | 描述                                                                                                    |
-| ---------------- | --------- | ------- | ---- | ------------------------------------------------------------------------------------------------------- |
-| `ADMIN_USERNAME` | `string`  | `None`  | `是` | 管理后台账号                                                                                            |
-| `ADMIN_PASSWORD` | `string`  | `None`  | `是` | 管理后台密码                                                                                            |
-| `PROXY_URL_POOL` | `string`  | `None`  | `否` | 代理池链接，多个代理用逗号分隔<br>`http://username@password@ip:port,socks5://username@password@ip:port` |
+<table>
+  <tr align="left">
+    <th>分类</th>
+    <th>变量名</th>
+    <th>类型</th>
+    <th>默认值</th>
+    <th>描述</th>
+  </tr>
+  <tr align="left">
+    <td rowspan="4">管理后台</td>
+    <td><code>ADMIN_USERNAME</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>管理后台账号</td>
+  </tr>
+  <tr align="left">
+    <td><code>ADMIN_PASSWORD</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>管理后台密码</td>
+  </tr>
+    <tr align="left">
+    <td><code>ALLOW_REGISTER</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>true</code></td>
+    <td>是否允许注册</td>
+  </tr>
+  </tr>
+    <tr align="left">
+    <td><code>USE_SERVER_RENDER</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>true</code></td>
+    <td>服务端托管 Proofofwork</td>
+  </tr>
+  <tr align="left">
+    <td rowspan="3">API 相关</td>
+    <td><code>ENABLE_MIRROR_API</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>true</code></td>
+    <td>是否开启 API 访问</td>
+  </tr>
+  <tr align="left">
+    <td><code>MIRROR_API_PREFIX</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>API 访问前缀，建议配置</td>
+  </tr>
+  <tr align="left">
+    <td><code>HATD</code></td>
+    <td><code>Boolean</code></td>
+    <td><code>false</code></td>
+    <td>开启临时聊天（不保存聊天记录）</td>
+  </tr>
+   <tr align="left">
+    <td rowspan="2">系统变量</td>
+    <td><code>PROXY_URL_POOL</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>代理池链接，多个代理用逗号分隔<br><code>http://username@password@ip:port,</code><br/><code>socks5://username@password@ip:port</code></td>
+  </tr>
+</table>
+
+# 聊天 API 接口
+
+可搭配 [ChatGPT-Next-Web](https://app.nextchat.dev)、[Lobe-Chat](https://github.com/lobehub/lobe-chat) 使用
+```
+accessToken 获取地址：https://chatgpt.com/api/auth/session
+
+API 地址为：https://你的地址
+```
+
+聊天接口请求示例：
+
+```bash
+export accessToken=XXXXX  # 获取地址：https://chatgpt.com/api/auth/session
+export yourUrl=http://127.0.0.1:50002
+
+
+curl --location "${yourUrl}/v1/chat/completions" \
+--header 'Content-Type: application/json' \
+--header "Authorization: Bearer ${accessToken}" \
+--data '{
+     "model": "gpt-4o-mini",
+     "messages": [{"role": "user", "content": "你好呀!"}],
+     "stream": true,
+     "conversation_id": null,
+     "parent_message_id": null,
+     "hatd": false
+   }'
+```
+
+更多 API 请点击查看：[高阶玩法](./docs/chatapi-gateway.md)
 
 ## FQA
 

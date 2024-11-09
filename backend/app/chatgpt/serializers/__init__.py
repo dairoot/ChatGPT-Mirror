@@ -36,6 +36,14 @@ class DeleteChatgptCarSerializer(serializers.Serializer):
 
 class ShowChatgptTokenSerializer(serializers.ModelSerializer):
     access_token_exp = serializers.SerializerMethodField()
+    use_count = serializers.SerializerMethodField()
+
+    def __init__(self, *args, use_count_dict=dict, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.use_count_dict = use_count_dict
+
+    def get_use_count(self, obj):
+        return self.use_count_dict.get(obj.chatgpt_username, 0)
 
     def get_access_token_exp(self, obj):
         try:

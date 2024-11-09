@@ -61,13 +61,13 @@
           </t-form-item>
 
           <t-form-item label="选择 ChatGPT" name="gptcar_list">
-            <t-space>
+            <t-space style="width: 100%">
               <t-select
                 v-model="newGptCar.gpt_account_list"
                 multiple
                 placeholder="Select"
                 filterable
-                style="width: 240px"
+                :min-collapsed-num="1"
               >
                 <t-option
                   v-for="item in gptAccountList"

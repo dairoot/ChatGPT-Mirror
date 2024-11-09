@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from app.accounts.models import User, VisitLog
+from app.chatgpt.models import ChatgptAccount
 
 
 class ShowVisitLogModelSerializer(serializers.ModelSerializer):
@@ -12,6 +13,18 @@ class ShowVisitLogModelSerializer(serializers.ModelSerializer):
 class ShowUserAccountModelSerializer(serializers.ModelSerializer):
     last_login = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
     date_joined = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
+    use_count = serializers.SerializerMethodField()
+    chatgpt_count = serializers.SerializerMethodField()
+
+    def __init__(self, *args, use_count_dict=dict, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.use_count_dict = use_count_dict
+
+    def get_chatgpt_count(self, obj):
+        return ChatgptAccount.get_by_gptcar_list(obj.gptcar_list).count()
+
+    def get_use_count(self, obj):
+        return self.use_count_dict.get(obj.username, 0)
 
     class Meta:
         model = User

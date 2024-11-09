@@ -3,15 +3,27 @@
     <t-dialog :visible="true" header="请选择 ChatGPT 账号" :cancel-btn="null" :confirm-btn="null" :on-close="onClose">
       <t-list class="list-block" split>
         <t-loading :loading="tableLoading">
-          <t-list-item v-for="item in tableData" :key="item.id" @click="onSelect(item.id)">
+          <t-list-item
+            v-for="item in tableData"
+            :key="item.id"
+            @click="onSelect(item.id)"
+            :class="{ 'is-disabled': !item.auth_status }"
+          >
             <t-list-item-meta>
               <template #description>
                 <t-space>
-                  <t-tag theme="primary" variant="outline">{{ item.plan_type }}</t-tag>
-                  <span>{{ item.chatgpt_flag }}</span>
+                  <t-tag theme="primary" variant="outline" style="width: 40px">{{ item.plan_type }}</t-tag>
+                  {{ item.chatgpt_flag }}
                 </t-space>
               </template>
             </t-list-item-meta>
+
+            <template #action>
+              <div>
+                <t-tag v-if="item.auth_status === false" theme="danger" variant="light"> 已过期 </t-tag>
+                <t-tag v-else theme="success" variant="light"> 运行中 </t-tag>
+              </div>
+            </template>
           </t-list-item>
         </t-loading>
       </t-list>
@@ -34,6 +46,7 @@ interface TableData {
   id: number;
   chatgpt_flag: string;
   plan_type: string;
+  auth_status: boolean;
 }
 const tableData = ref<TableData[]>([]);
 
@@ -48,9 +61,12 @@ const getUserChatGPTAccountList = async () => {
   const response = await RequestApi('/0x/user/chatgpt-list');
 
   const data = await response.json();
-  tableData.value = data.results;
-
   tableLoading.value = false;
+  if (data.results.length === 1 && data.results[0].auth_status) {
+    onSelect(data.results[0].id);
+  } else {
+    tableData.value = data.results;
+  }
 };
 
 const onClose = () => {
@@ -82,5 +98,12 @@ const onSelect = async (chatgptId: number) => {
     background: var(--td-gray-color-2);
     cursor: pointer;
   }
+}
+
+.is-disabled {
+  pointer-events: none;
+  /* Prevent interaction */
+  opacity: 0.5;
+  /* Optional: Make the item look visually disabled */
 }
 </style>
