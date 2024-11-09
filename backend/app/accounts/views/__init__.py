@@ -22,6 +22,8 @@ class GetMirrorToken(APIView):
         user_account_list = ChatgptAccount.get_by_gptcar_list(user.gptcar_list)
         chatgpt_username_list = [i.chatgpt_username for i in user_account_list]
         res = req_gateway("post", "/api/get-mirror-token", json={
+            "isolated_session": user.isolated_session,
+            "limits": user.model_limit,
             "chatgpt_list": chatgpt_username_list,
             "user_name": user.username,
         })

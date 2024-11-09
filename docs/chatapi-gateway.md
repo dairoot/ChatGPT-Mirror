@@ -121,7 +121,11 @@ POST: /api/get-mirror-token
   | 字段 | 类型 | 描述 |
   | ----- | ------ | ----------------------- |
   | `user_name` | `string` |  用户名称 |
-  | `chatgpt_list` | `string[]` | ChatGPT 列表 |
+  | `isolated_session` | `bool` | 独立会话 |
+  | `limits` | `obj[]` | 模型限制 |
+  | `chatgpt_list` | `string[]` | ChatGPT 名称列表 |
+
+
 
 
 ### 免登地址
