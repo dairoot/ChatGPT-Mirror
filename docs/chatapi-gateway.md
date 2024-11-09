@@ -37,9 +37,9 @@ POST: /v1/chat/completions
 
 
 
-### 获取用户信息 
+### 获取 ChatGPT 账号信息 
 
-作用于 token 录入 很刷新
+作用于 token 录入 和 刷新
 
 POST: /api/get-user-info
 
