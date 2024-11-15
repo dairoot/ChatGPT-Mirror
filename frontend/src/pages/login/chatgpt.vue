@@ -1,6 +1,6 @@
 <template>
   <div>
-    <t-dialog :visible="true" header="请选择 ChatGPT 账号" :cancel-btn="null" :confirm-btn="null" :on-close="onClose">
+    <t-dialog :visible="tableVisible" header="请选择 ChatGPT 账号" :cancel-btn="null" :confirm-btn="null" :on-close="onClose">
       <t-list class="list-block" split>
         <t-loading :loading="tableLoading">
           <t-list-item
@@ -41,6 +41,7 @@ import RequestApi from '@/api/request';
 
 const tableLoading = ref(false);
 const router = useRouter();
+const tableVisible = ref(false);
 
 interface TableData {
   id: number;
@@ -57,7 +58,6 @@ onMounted(async () => {
 const getUserChatGPTAccountList = async () => {
   // 获取 用户 ChatGPT 账号列表
   tableLoading.value = true;
-
   const response = await RequestApi('/0x/user/chatgpt-list');
 
   const data = await response.json();
@@ -65,6 +65,7 @@ const getUserChatGPTAccountList = async () => {
   if (data.results.length === 1 && data.results[0].auth_status) {
     onSelect(data.results[0].id);
   } else {
+    tableVisible.value = true;
     tableData.value = data.results;
   }
 };

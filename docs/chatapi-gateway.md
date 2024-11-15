@@ -14,7 +14,9 @@ docker run -p 50002:8787 dairoot/chatgpt-gateway:latest
 | `ENABLE_MIRROR_API` |	`Boolean`	|`true`	| 是否开启 API 访问|
 | `MIRROR_API_PREFIX` |	`String`	|`None` |	API 访问前缀，建议配置|
 | `HATD` |	`Boolean`	|`false`|	开启临时聊天（不保存聊天记录）|
+| `PROXY_URL_POOL` |	`String`	|`None`|	代理池链接，多个代理用逗号分隔 <br> `http://username@password@ip:port,` <br> `socks5://username@password@ip:port`|
 
+## API
 
 ### 聊天 API
 POST: /v1/chat/completions
@@ -36,23 +38,14 @@ POST: /v1/chat/completions
   | `hatd` | `boolean` |`默认同环境变量` | `否` | 开启临时聊天（不保存聊天记录）<br> 同上述环境变量的 `HATD` |
 
 
-
-### 获取 ChatGPT 账号信息 
-
-作用于 token 录入 和 刷新
-
-POST: /api/get-user-info
+### 语音聊天
+GET: /api/livekit
 
 - 请求头：
   | 字段 | 类型 | 描述 |
   | ----- | ------ | ----------------------- |
   | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
 
-
-- 请求参数
-  | 字段 | 类型 | 描述 |
-  | ----- | ------ | ------------------------------------------------------------------------------ |
-  | `chatgpt_token` | `string` | 支持的 token 类型 <br>- [Access Token](https://chatgpt.com/api/auth/session) <br>- [Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6) <br>- Refresh Token |
 
 
 ### 登录 
@@ -73,6 +66,49 @@ POST: /api/login
   | `limits` | `obj[]` | 模型限制 |
   | `user_name` | `string` | 用户名称 |
   | `isolated_session` | `bool` | 独立会话 |
+
+
+
+### 获取长期有效 Mirror Token
+
+`Mirror Token` 是一个固定值，不会发生变更，用于映射最新的 `Access Token` 以进行 API 访问。
+
+因此，`Mirror Token` 本身不会过期，除非最新的 `Access Token` 失效。
+
+POST: /api/get-mirror-token
+
+- 请求头：
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ----------------------- |
+  | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
+
+- 请求参数
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ----------------------- |
+  | `user_name` | `string` |  用户名称 |
+  | `isolated_session` | `bool` | 独立会话 |
+  | `limits` | `obj[]` | 模型限制 |
+  | `chatgpt_list` | `string[]` | ChatGPT 登录邮箱列表 |
+
+
+### 获取 ChatGPT 账号信息 
+
+作用于 token 录入 和 刷新
+
+POST: /api/get-user-info
+
+- 请求头：
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ----------------------- |
+  | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
+
+
+- 请求参数
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ------------------------------------------------------------------------------ |
+  | `chatgpt_token` | `string` | 支持的 token 类型 <br>- [Access Token](https://chatgpt.com/api/auth/session) <br>- [Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6) <br>- Refresh Token |
+
+
 
 
 ### 获取用户使用次数
@@ -101,31 +137,7 @@ POST: /api/get-chatgpt-use-count
 - 请求参数
   | 字段 | 类型 | 描述 |
   | ----- | ------ | ----------------------- |
-  | `chatgpt_list` | `string[]` | ChatGPT 列表 |
-
-
-### 获取 Mirror Token
-
-`Mirror Token` 是一个固定值，不会发生变更，用于映射最新的 `Access Token` 以进行 API 访问。
-
-因此，`Mirror Token` 本身不会过期，除非最新的 `Access Token` 失效。
-
-POST: /api/get-mirror-token
-
-- 请求头：
-  | 字段 | 类型 | 描述 |
-  | ----- | ------ | ----------------------- |
-  | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
-
-- 请求参数
-  | 字段 | 类型 | 描述 |
-  | ----- | ------ | ----------------------- |
-  | `user_name` | `string` |  用户名称 |
-  | `isolated_session` | `bool` | 独立会话 |
-  | `limits` | `obj[]` | 模型限制 |
-  | `chatgpt_list` | `string[]` | ChatGPT 名称列表 |
-
-
+  | `chatgpt_list` | `string[]` | ChatGPT 登录邮箱列表 |
 
 
 ### 免登地址

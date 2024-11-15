@@ -9,8 +9,8 @@ services:
       - CHATGPT_GATEWAY_URL=http://gateway:8787
     ports:
       - "50002:50002"
-    depends_on:
-      - gateway
+    # depends_on:
+    #   - gateway
     volumes:
       - chatgpt_mirror_db:/app/backend/db/
       - ./backend/logs:/app/backend/logs

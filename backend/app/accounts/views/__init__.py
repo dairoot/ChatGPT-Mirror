@@ -19,8 +19,8 @@ class GetMirrorToken(APIView):
     def get(self, request):
         user = User.objects.filter(id=request.GET["user_id"]).first()
 
-        user_account_list = ChatgptAccount.get_by_gptcar_list(user.gptcar_list)
-        chatgpt_username_list = [i.chatgpt_username for i in user_account_list]
+        user_gpt_list = ChatgptAccount.get_by_gptcar_list(user.gptcar_list)
+        chatgpt_username_list = [i.chatgpt_username for i in user_gpt_list]
         res = req_gateway("post", "/api/get-mirror-token", json={
             "isolated_session": user.isolated_session,
             "limits": user.model_limit,
@@ -30,6 +30,7 @@ class GetMirrorToken(APIView):
         for line in res:
             obj = ChatgptAccount.objects.filter(chatgpt_username=line["chatgpt_username"]).first()
             line["auth_status"] = obj.auth_status
+            line["plan_type"] = obj.plan_type
         return Response(res)
 
 
@@ -38,8 +39,8 @@ class UserChatGPTAccountList(APIView):
 
     def get(self, request):
         results = []
-        user_account_list = ChatgptAccount.get_by_gptcar_list(request.user.gptcar_list)
-        for line in user_account_list:
+        user_gpt_list = ChatgptAccount.get_by_gptcar_list(request.user.gptcar_list)
+        for line in user_gpt_list:
             results.append({
                 "id": line.id,
                 "chatgpt_flag": "{:03}{}".format(line.id, line.chatgpt_username[:3]),

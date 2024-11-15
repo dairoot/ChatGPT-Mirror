@@ -72,24 +72,7 @@
         :cancel-btn="null"
         :confirm-btn="null"
       >
-        <!-- tableChatgptDetailsData -->
-        <t-table
-          :data="tableChatgptDetailsData"
-          :columns="columnsChatgptDetails"
-          row-key="chatgpt_username"
-          :loading="tableLoading"
-          bordered
-          hover
-        >
-          <template #auth_status="{ row }">
-            <t-tag v-if="row.auth_status === false" theme="danger" variant="light"> 已过期 </t-tag>
-            <t-tag v-if="row.auth_status === true" theme="success" variant="light"> 运行中 </t-tag>
-          </template>
-
-          <template #op="slotProps">
-            <t-link theme="primary" @click="handleCopyUrl(slotProps.row.mirror_token)"> 复制</t-link>
-          </template>
-        </t-table>
+        <user-chatgpt-details-component ref="userChatgptDetailsRef" />
       </t-dialog>
 
       <!-- 添加/编辑 用户 dialog -->
@@ -145,8 +128,8 @@
             <t-space direction="vertical">
               <t-switch
                 v-model="hasModelLimit"
-                @change="(value) => onModelLimitChange(value as boolean)"
                 :custom-value="[true, false]"
+                @change="(value) => onModelLimitChange(value as boolean)"
               />
               <div v-if="hasModelLimit">
                 <t-space direction="vertical" :size="3">
@@ -223,8 +206,8 @@
             <t-space direction="vertical">
               <t-switch
                 v-model="hasModelLimit"
-                @change="(value) => onModelLimitChange(value as boolean)"
                 :custom-value="[true, false]"
+                @change="(value) => onModelLimitChange(value as boolean)"
               />
               <div v-if="hasModelLimit">
                 <t-space direction="vertical" :size="3">
@@ -292,14 +275,13 @@ import { ref } from 'vue';
 
 import RequestApi from '@/api/request';
 
+import UserChatgptDetailsComponent from './user_chatgpt.vue';
+
+const userChatgptDetailsRef = ref<typeof UserChatgptDetailsComponent | null>(null);
+
 interface TableData {
   token: string;
   user_info: string;
-}
-
-interface TableChatgptDetailsData {
-  mirror_token: string;
-  chatgpt_username: string;
 }
 
 const isGptcarListEmpty = ref(true);
@@ -308,10 +290,8 @@ const actionType = ref('add');
 const loading = ref(false);
 const tableLoading = ref(false);
 const tableData = ref<TableData[]>([]);
-const tableChatgptDetailsData = ref<TableChatgptDetailsData[]>([]);
 const gptCarList = ref<any>([]);
 const showDialog = ref(false);
-const showChatGPTDetailsDialog = ref(false);
 const showModelLimitDialog = ref(false);
 const showDeleteDialog = ref(false);
 const usernameDelete = ref('');
@@ -321,6 +301,7 @@ const UserAccountUri = '/0x/user/';
 const BatchModelLimitUri = '/0x/user/batch-model-limit';
 const GptCarEnumUri = '/0x/chatgpt/car-enum';
 const selectedRowKeys = ref<TableProps['selectedRowKeys']>([]);
+const showChatGPTDetailsDialog = ref(false);
 
 interface TokenUserForm {
   is_active: boolean;
@@ -345,12 +326,6 @@ const rehandlePageChange = (curr: any) => {
   getUserList();
 };
 
-const handleCopyUrl = (mirrorToken: string) => {
-  const notLoginUrl = `${window.location.origin}/api/not-login?user_gateway_token=${mirrorToken}`;
-  navigator.clipboard.writeText(notLoginUrl);
-  MessagePlugin.success('复制成功');
-};
-
 const BatcModelLimit = async () => {
   showModelLimitDialog.value = true;
 };
@@ -358,13 +333,6 @@ const onSelectChange: TableProps['onSelectChange'] = (value, _) => {
   selectedRowKeys.value = value;
   // console.log(value, _);
 };
-
-const columnsChatgptDetails: TableProps['columns'] = [
-  { colKey: 'chatgpt_username', title: 'ChatGPT', width: 80 },
-  { colKey: 'auth_status', title: '状态', width: 30 },
-  { colKey: 'mirror_token', title: 'Mirror Token (用于 API, 该token不会变更)', width: 100 },
-  { colKey: 'op', title: '免登链接', width: 30 },
-];
 
 const columns: TableProps['columns'] = [
   { colKey: 'row-select', type: 'multiple', checkProps: ({ row }) => ({ disabled: row.username === 'free_account' }) },
@@ -526,17 +494,6 @@ const batchUpdateUserModelLimit = async () => {
   }
 };
 
-const getChatGPTDetails = async (user: any) => {
-  showChatGPTDetailsDialog.value = true;
-  tableLoading.value = true;
-  const GptDetailsUri = `/0x/user/get-mirror-token?user_id=${user.id}`;
-  const response = await RequestApi(GptDetailsUri);
-  const data = await response.json();
-  tableChatgptDetailsData.value = data;
-  tableLoading.value = false;
-  console.log(data);
-};
-
 const handleEdit = async (user: TokenUserForm) => {
   newUser.value = { ...user };
   hasModelLimit.value = Boolean(newUser.value.model_limit.length !== 0);
@@ -605,6 +562,11 @@ const onModelLimitChange = (value: boolean) => {
     batchModelLimitUser.value.model_limit = [];
   }
   console.log('onModelLimitChange', value);
+};
+
+const getChatGPTDetails = async (user: any) => {
+  showChatGPTDetailsDialog.value = true;
+  userChatgptDetailsRef.value.getChatGPTDetails(user);
 };
 
 getUserList();

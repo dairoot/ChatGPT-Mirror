@@ -10,6 +10,7 @@ from app.page import DefaultPageNumberPagination
 from app.settings import CHATGPT_GATEWAY_URL
 from app.utils import save_visit_log, req_gateway
 from app.accounts.models import User
+from rest_framework.exceptions import ValidationError
 
 
 class ChatGPTAccountEnum(APIView):
@@ -81,7 +82,15 @@ class ChatGPTLoginView(APIView):
     def post(self, request):
         serializer = ChatGPTLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
+        user_gpt_list = ChatgptAccount.get_by_gptcar_list(request.user.gptcar_list)
+        user_gpt_id_list = [i.id for i in user_gpt_list]
+
+        if serializer.data["chatgpt_id"] not in user_gpt_id_list:
+            raise ValidationError("该账号不属于当前用户")
+
         chatgpt = ChatgptAccount.get_by_id(serializer.data["chatgpt_id"])
+
         payload = {
             "user_name": request.user.username,
             "access_token": chatgpt.access_token,
