@@ -1,5 +1,8 @@
 ## 服务器部署
 
+服务器推荐：[腾讯云](https://curl.qcloud.com/0JAXkoF1) 选择欧美区域
+
+
 #### 1. 运行
 
 ```bash
