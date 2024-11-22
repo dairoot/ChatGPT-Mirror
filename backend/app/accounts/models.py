@@ -8,6 +8,7 @@ class User(AbstractUser):
     remark = models.TextField(blank=True, verbose_name="备注")
     isolated_session = models.BooleanField(default=True, verbose_name="独立回话")
     gptcar_list = models.JSONField(default=list)
+    expired_date = models.DateField(blank=True, null=True, verbose_name="过期日期")
 
 
 class VisitLog(models.Model):

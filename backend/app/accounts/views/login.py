@@ -36,6 +36,9 @@ class AccountLogin(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.validated_data['user']
+        if user.expired_date and user.expired_date <= timezone.now().date():
+            raise ValidationError({"message": "账号已过期"})
+
         user.last_login = timezone.now()
         user.save()
 

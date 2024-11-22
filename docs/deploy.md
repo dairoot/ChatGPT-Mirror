@@ -55,6 +55,13 @@ server {
     error_log /data/logs/ngx.chatgpt.error.log;
     # 日志文件 END
 
+    # 屏蔽无效文件 START
+    location ~* \.js\.map$ {
+        return 404;
+    }
+    # 屏蔽无效文件 END
+
+
     client_header_buffer_size 4k;
     large_client_header_buffers 8 16k;
 
@@ -122,7 +129,7 @@ server {
 
 
     # GLOBAL-CACHE START
-    location ~* \.(js|css)$ {
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|woff|woff2|ttf|otf|eot|svg|mp4|webm|ogg|ogv|zip|pdf)$ {
         proxy_cache newchat_cache;
         proxy_cache_valid 200 60m;   # 对状态码200的响应缓存60分钟
 

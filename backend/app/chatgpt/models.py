@@ -31,7 +31,7 @@ class ChatgptAccount(models.Model):
         if gptcar_list:
             gptaccount = gptaccount.filter(id__in=chatgpt_account_list)
 
-        return gptaccount.order_by("-id").all()
+        return gptaccount.order_by("-plan_type", "-id").all()
 
 
     @classmethod

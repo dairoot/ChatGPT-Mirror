@@ -15,6 +15,7 @@ docker run -p 50002:8787 dairoot/chatgpt-gateway:latest
 | `MIRROR_API_PREFIX` |	`String`	|`None` |	API 访问前缀，建议配置|
 | `HATD` |	`Boolean`	|`false`|	开启临时聊天（不保存聊天记录）|
 | `PROXY_URL_POOL` |	`String`	|`None`|	代理池链接，多个代理用逗号分隔 <br> `http://username@password@ip:port,` <br> `socks5://username@password@ip:port`|
+| `VOICE_PROXY_URL` | `String` | `None` | 语音代理地址 [点击自建](./docs/livekit.md)<br>若不配置，则用户需要翻墙才能使用语音功能|
 
 ## API
 

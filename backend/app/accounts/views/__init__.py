@@ -11,6 +11,7 @@ from app.chatgpt.models import ChatgptAccount
 from app.page import DefaultPageNumberPagination
 from app.settings import ADMIN_USERNAME
 from app.utils import req_gateway
+from datetime import datetime
 
 
 class GetMirrorToken(APIView):
@@ -40,9 +41,24 @@ class UserChatGPTAccountList(APIView):
     def get(self, request):
         results = []
         user_gpt_list = ChatgptAccount.get_by_gptcar_list(request.user.gptcar_list)
-        for line in user_gpt_list:
+        chatgpt_list = [i.chatgpt_username for i in user_gpt_list]
+
+        try:
+            use_count_dict = req_gateway("post", "/api/get-chatgpt-use-count", json={"chatgpt_list": chatgpt_list})
+        except:
+            use_count_dict = {}
+
+        auth_user_gpt_list = [i for i in user_gpt_list if i.auth_status]
+        current_minute = datetime.now().minute
+
+        for line in auth_user_gpt_list or user_gpt_list:
+            gpt_use_count_dict = use_count_dict.get(line.chatgpt_username, {}).get("gpt-4o", {})
+            last_3h_use_count = (gpt_use_count_dict.get("last_1h", 0) +
+                          gpt_use_count_dict.get("last_2h", 0) + gpt_use_count_dict.get("last_3h", 0) +
+                          gpt_use_count_dict.get("last_4h", 0) * (1 - current_minute / 60))
             results.append({
                 "id": line.id,
+                "use_count": last_3h_use_count,
                 "chatgpt_flag": "{:03}{}".format(line.id, line.chatgpt_username[:3]),
                 "plan_type": line.plan_type,
                 "auth_status": line.auth_status,
@@ -102,6 +118,9 @@ class UserAccountView(generics.ListCreateAPIView):
 
         if serializer.data.get("password"):
             user.set_password(serializer.data["password"])
+
+        if "expired_date" in serializer.data.keys():
+            user.expired_date = serializer.data["expired_date"]
 
         user.gptcar_list = serializer.data["gptcar_list"]
         user.is_active = serializer.data["is_active"]

@@ -106,11 +106,17 @@ cp .env.example .env && vi .env
     <td>开启临时聊天（不保存聊天记录）</td>
   </tr>
    <tr align="left">
-    <td rowspan="2">系统变量</td>
+    <td rowspan="3">系统变量</td>
     <td><code>PROXY_URL_POOL</code></td>
     <td><code>String</code></td>
     <td><code>None</code></td>
     <td>代理池链接，多个代理用逗号分隔<br><code>http://username@password@ip:port,</code><br/><code>socks5://username@password@ip:port</code></td>
+  </tr>
+    <tr align="left">
+    <td><code>VOICE_PROXY_URL</code></td>
+    <td><code>String</code></td>
+    <td><code>None</code></td>
+    <td>语音代理地址 <a href="./docs/livekit.md">点击自建</a><br>若不配置，则用户需要翻墙才能使用语音功能</td>
   </tr>
 </table>
 

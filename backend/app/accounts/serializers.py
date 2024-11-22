@@ -42,6 +42,7 @@ class AddUserAccountSerializer(serializers.Serializer):
     model_limit = serializers.JSONField(default=dict)
     remark = serializers.CharField(default="", allow_blank=True)
     isolated_session = serializers.BooleanField()
+    expired_date = serializers.DateField(required=False, allow_null=True)
 
 
 class BatchModelLimitSerializer(serializers.Serializer):

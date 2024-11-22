@@ -104,6 +104,18 @@
             <t-switch v-model="newUser.isolated_session" :custom-value="[true, false]" />
           </t-form-item>
 
+          <t-form-item label="过期日期" name="expired_date">
+            <t-date-picker
+              v-model="newUser.expired_date"
+              placeholder=""
+              :disable-date="{
+                before: dayjs().subtract(0, 'day').format(),
+              }"
+              clearable
+              allow-input
+            />
+          </t-form-item>
+
           <t-form-item label="选择 ChatGPT" name="gptcar_list">
             <t-space>
               <t-radio-group v-model="isGptcarListEmpty" class="side-mode-radio">
@@ -269,6 +281,7 @@
 </template>
 
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import { AddIcon, DeleteIcon, UserCircleIcon } from 'tdesign-icons-vue-next';
 import { CustomValidator, FormProps, MessagePlugin, TableProps } from 'tdesign-vue-next';
 import { ref } from 'vue';
@@ -312,6 +325,7 @@ interface TokenUserForm {
   remark: string;
   model_limit: any[];
   gptcar_list: any[];
+  expired_date: any;
 }
 
 const pagination = {
@@ -342,6 +356,7 @@ const columns: TableProps['columns'] = [
   { colKey: 'chatgpt_count', title: 'ChatGPT', width: 120 },
   { colKey: 'use_count', title: '当日用量', width: 100 },
   { colKey: 'last_login', title: '最近登录时间', width: 160 },
+  { colKey: 'expired_date', title: '过期日期', width: 160 },
   { colKey: 'date_joined', title: '注册时间', width: 160 },
   { colKey: 'remark', title: '备注', width: 200 },
   { width: 200, colKey: 'op', title: '操作' },
@@ -392,6 +407,7 @@ const defaultUser = {
   remark: '',
   model_limit: [] as any[],
   gptcar_list: [] as any[],
+  expired_date: undefined as Date | undefined,
 };
 
 const batchModelLimitUser = ref(JSON.parse(JSON.stringify({ model_limit: defaultUser.model_limit })));
@@ -457,6 +473,8 @@ const addOrUpdateUser = async () => {
   if (isGptcarListEmpty.value) {
     newUser.value.gptcar_list = [];
   }
+
+  newUser.value.expired_date = newUser.value.expired_date || null;
   const response = await RequestApi(UserAccountUri, 'POST', newUser.value);
 
   const data = await response.json();

@@ -49,6 +49,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       proxy: {
         [VITE_API_URL_PREFIX]: {
           target: 'http://127.0.0.1:8000/',
+          // target: 'https://chatgpt.dairoot.cn/',
+
           changeOrigin: true,
         },
       },

@@ -17,9 +17,12 @@ def _update_token(chatgpt_username, chatgpt_token):
     headers = {"Authorization": "Bearer {}".format(ADMIN_PASSWORD)}
     res = requests.post(url, headers=headers, json={"chatgpt_token": chatgpt_token})
     res_json = res.json()
+
     if res.status_code == 400:
-        print("res_json", chatgpt_username, res_json)
-        return False
+        logger.info("res_json", chatgpt_username, res_json)
+        if "token 失效" in res_json.get("message", ""):
+            return False
+        return None
 
     res_json["auth_status"] = True
     ChatgptAccount.save_data(res_json)
@@ -38,14 +41,14 @@ def update_access_token():
 
         if line.refresh_token:
             update_status = _update_token(line.chatgpt_username, line.refresh_token)
-            if not update_status:
-                # line.refresh_token = None
+            if update_status is False:
+                line.refresh_token = None
                 line.save()
 
         elif line.session_token:
             update_status = _update_token(line.chatgpt_username, line.session_token)
-            if not update_status:
-                # line.session_token = None
+            if update_status is False:
+                line.session_token = None
                 line.save()
 
 

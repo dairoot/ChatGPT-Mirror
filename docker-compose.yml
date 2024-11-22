@@ -37,5 +37,13 @@ services:
     # ports:
     #   - "127.0.0.1:6379:6379"
 
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 10800 web gateway
+
 volumes:
   chatgpt_mirror_db:
