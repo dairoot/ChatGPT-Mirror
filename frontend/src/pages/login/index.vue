@@ -4,7 +4,7 @@
       <div style="width: 400px; float: left">
         <div v-if="cfg.notice" v-html="cfg.notice"></div>
       </div>
-      <div v-if="cfg.enable_plugin" style="margin: 12px 20px">
+      <div v-if="cfg.show_github" style="margin: 12px 20px">
         <a href="https://github.com/dairoot/ChatGPT-Mirror" target="_blank" style="float: right">
           <svg
             width="32"
@@ -95,7 +95,7 @@ const userStore = useUserStore();
 const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
-const cfg = ref({ enable_plugin: false, notice: '' });
+const cfg = ref({ show_github: false, notice: '' });
 const loginForm = reactive({
   username: '',
   password: '',
@@ -105,7 +105,7 @@ const loginForm = reactive({
 });
 
 onMounted(async () => {
-  // await getFeCfg();
+  await getVersionCfg();
 });
 
 const rules: Record<string, FormRule[]> = {
@@ -169,11 +169,10 @@ const onSubmit: FormProps['onSubmit'] = async ({ validateResult, firstError }) =
   }
 };
 
-const getFeCfg = async () => {
-  const response = await fetch('/api/fe-cfg');
+const getVersionCfg = async () => {
+  const response = await fetch('/0x/user/version-cfg');
   const data = await response.json();
-  Object.assign(cfg.value, { ...data.data });
-  return data;
+  Object.assign(cfg.value, { ...data });
 };
 
 const goFree = async () => {

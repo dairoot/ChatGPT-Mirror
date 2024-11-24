@@ -27,3 +27,11 @@ server {
     }
 }
 ```
+
+## 配置环境变量
+
+```bash
+$ vi .env
+
+VOICE_PROXY_URL=webrtc.example.cn # 替换自己域名
+```
