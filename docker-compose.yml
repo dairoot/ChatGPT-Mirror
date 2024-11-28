@@ -48,7 +48,8 @@ services:
   cf5s:
     image: dairoot/cf5s:latest
     restart: always
-
+    depends_on:
+      - gateway
     env_file:
       - .env
     environment:
