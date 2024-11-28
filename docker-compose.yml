@@ -45,5 +45,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --cleanup --interval 10800 web gateway
 
+  cf5s:
+    image: dairoot/cf5s:latest
+    restart: always
+
+    env_file:
+      - .env
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787
+      
 volumes:
   chatgpt_mirror_db:

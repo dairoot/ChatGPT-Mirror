@@ -44,12 +44,14 @@ def update_access_token():
             if update_status is False:
                 line.refresh_token = None
                 line.save()
+                logger.info(f"refresh_token 已经过期: {line.chatgpt_username}, rtoken: {line.refresh_token}")
 
         elif line.session_token:
             update_status = _update_token(line.chatgpt_username, line.session_token)
             if update_status is False:
                 line.session_token = None
                 line.save()
+                logger.info(f"session_token 已经过期: {line.chatgpt_username}, stoken: {line.session_token}")
 
 
 
@@ -61,7 +63,7 @@ def check_access_token():
                 line.auth_status = False
                 line.updated_time = int(time.time())
                 line.save()
-                logger.warning(f"access_token已经过期: {line.chatgpt_username}")
+                logger.warning(f"access_token 已经过期: {line.chatgpt_username}")
                 return
             else:
                 logger.warning(f"access_token 有效: {line.chatgpt_username}")

@@ -7,7 +7,7 @@ chatgpt.com
 正在验证您是否是真人。这可能需要几秒钟时间。
 ```
 
-### 以下四个方案，多试试，总有一个方案适合你
+### 以下三个方案，多试试，总有一个方案适合你
 
 ### 方案一. 更换服务器 IP 解决（简单方便）
 [腾讯云](https://curl.qcloud.com/0JAXkoF1) 选择欧美区域
@@ -35,7 +35,8 @@ PROXY_URL_POOL=socks5://warp:1080
 查看代理配置是否有效
 
 ```bash
-curl  http://127.0.0.1:50002/api/check-proxy?admin_password=环境变量中的ADMIN_PASSWORD
+浏览器访问
+http://你的域名/api/check-proxy?admin_password=环境变量中的ADMIN_PASSWORD
 
 ```
 
@@ -53,11 +54,6 @@ PROXY_URL_POOL=http://username@password@ip:port,socks5://username@password@ip:po
 ./deploy.sh
 ```
 查看代理配置是否有效（同warp验证流程）
-
-### 方案四. 脚本过盾
-```bash
-docker compose -f docker-compose-cf5s.yml up
-```
 
 
 --- 
