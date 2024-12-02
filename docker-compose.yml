@@ -30,6 +30,8 @@ services:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - chatgpt_gateway_db:/data
 
   redis:
     image: redis:latest
@@ -57,3 +59,4 @@ services:
       
 volumes:
   chatgpt_mirror_db:
+  chatgpt_gateway_db:
