@@ -110,7 +110,7 @@ cp .env.example .env && vi .env
     <td><code>PROXY_URL_POOL</code></td>
     <td><code>String</code></td>
     <td><code>None</code></td>
-    <td>代理池链接，多个代理用逗号分隔<br><code>http://username@password@ip:port,</code><br/><code>socks5://username@password@ip:port</code></td>
+    <td>代理池链接，多个代理用逗号分隔<br><code>http://username:password@ip:port,</code><br/><code>socks5://username:password@ip:port</code></td>
   </tr>
     <tr align="left">
     <td><code>VOICE_PROXY_URL</code></td>
