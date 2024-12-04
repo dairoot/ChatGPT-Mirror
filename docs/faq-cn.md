@@ -49,7 +49,7 @@ vi .env
 
 # 多个代理地址，用逗号隔开
 
-PROXY_URL_POOL=http://username@password@ip:port,socks5://username@password@ip:port
+PROXY_URL_POOL=http://username:password@ip:port,socks5://username:password@ip:port
 
 ./deploy.sh
 ```
