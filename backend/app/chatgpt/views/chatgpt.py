@@ -40,6 +40,7 @@ class ChatGPTAccountView(generics.ListCreateAPIView):
         return pg.get_paginated_response(serializer.data)
 
     def post(self, request, *args, **kwargs):
+        # 录入 chatgpt 账号
         serializer = AddChatgptTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         for chatgpt_token in serializer.data["chatgpt_token_list"]:
@@ -47,8 +48,11 @@ class ChatGPTAccountView(generics.ListCreateAPIView):
                 continue
             res_json = req_gateway("post", "/api/get-user-info", json={"chatgpt_token": chatgpt_token})
             res_json["auth_status"] = True
-
             ChatgptAccount.save_data(res_json)
+
+            # 关闭记忆
+            chatgpt_name = res_json["user_info"]["email"]
+            req_gateway("post", "/api/close-chatgpt-memory", json={"chatgpt_name": chatgpt_name})
 
         return Response({"message": "录入成功"})
 
