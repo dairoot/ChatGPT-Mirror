@@ -30,12 +30,13 @@ services:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379/0
-    volumes:
-      - chatgpt_gateway_db:/data
+
 
   redis:
     image: redis:latest
     restart: always
+    volumes:
+      - chatgpt_gateway_db:/data
     # ports:
     #   - "127.0.0.1:6379:6379"
 
