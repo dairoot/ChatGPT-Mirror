@@ -37,6 +37,7 @@ services:
     restart: always
     volumes:
       - chatgpt_gateway_db:/data
+    command: ["redis-server", "--appendonly", "yes"]
     # ports:
     #   - "127.0.0.1:6379:6379"
 
