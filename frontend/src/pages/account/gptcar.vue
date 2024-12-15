@@ -123,7 +123,7 @@ const GptCarUri = '/0x/chatgpt/car';
 
 const tableData = ref<TableData[]>([]);
 const columns: TableProps['columns'] = [
-  { colKey: 'car_name', title: '号词名称', width: 220 },
+  { colKey: 'car_name', title: '号池名称', width: 220 },
   { colKey: 'gpt_account_name_list', title: 'gpt 账号', width: 200 },
   { colKey: 'created_time', title: '创建时间', width: 200 },
 
