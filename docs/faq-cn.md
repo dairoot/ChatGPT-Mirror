@@ -24,14 +24,6 @@ docker compose -f docker-compose-warp.yml up
 curl -s --socks5-hostname 127.0.0.1:1080 https://cloudflare.com/cdn-cgi/trace |grep warp
 ```
 
-##### 设置warp代理，并启动程序
-```bash
-vi .env
-
-PROXY_URL_POOL=socks5://warp:1080
-
-./deploy.sh
-```
 查看代理配置是否有效
 
 ```bash

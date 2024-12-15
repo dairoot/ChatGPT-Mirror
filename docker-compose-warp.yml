@@ -1,17 +1,78 @@
 services:
+  web:
+    image: dairoot/chatgpt-mirror:latest
+
+    env_file:
+      - .env
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787
+    ports:
+      - "50002:50002"
+    volumes:
+      - chatgpt_mirror_db:/app/backend/db/
+      - ./backend/logs:/app/backend/logs
+
+    restart: always
+
+  gateway:
+    image: dairoot/chatgpt-gateway:latest
+    deploy:
+      replicas: 1 # 账号数量多时可+1
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - PROXY_URL_POOL=socks5://warp:1080 # warp 代理地址
+
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - chatgpt_gateway_db:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 10800 web gateway
+
+  cf5s:
+    image: dairoot/cf5s:latest
+    restart: always
+    depends_on:
+      - gateway
+    env_file:
+      - .env
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787
+      
   warp:
     image: caomingjun/warp
     container_name: warp
     restart: always
+    devices:
+      - /dev/net/tun:/dev/net/tun
     ports:
       - "1080:1080"
     environment:
       - WARP_SLEEP=2
-      # - WARP_LICENSE_KEY= # optional
     cap_add:
+      - MKNOD
+      - AUDIT_WRITE
       - NET_ADMIN
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
       - net.ipv4.conf.all.src_valid_mark=1
     volumes:
       - ./data:/var/lib/cloudflare-warp
+
+
+volumes:
+  chatgpt_mirror_db:
+  chatgpt_gateway_db:
