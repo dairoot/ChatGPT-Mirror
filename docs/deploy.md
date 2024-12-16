@@ -61,9 +61,10 @@ server {
     }
     # 屏蔽无效文件 END
 
-
+    client_max_body_size 50M;
     client_header_buffer_size 4k;
     large_client_header_buffers 8 16k;
+
 
 
     location / {
@@ -103,6 +104,7 @@ server {
     error_log /data/logs/ngx.chatgpt.error.log;
     # 日志文件 END
 
+    client_max_body_size 50M;
     client_header_buffer_size 4k;
     large_client_header_buffers 8 16k;
 
