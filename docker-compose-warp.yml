@@ -16,6 +16,7 @@ services:
     volumes:
       - chatgpt_mirror_db:/app/backend/db/
       - ./backend/logs:/app/backend/logs
+    <<: *defaults
 
 
   gateway:
@@ -27,6 +28,7 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379/0
       - PROXY_URL_POOL=socks5://warp:1080 # warp 代理地址
+    <<: *defaults
 
 
   cf5s:
@@ -35,6 +37,7 @@ services:
       - gateway
     environment:
       - CHATGPT_GATEWAY_URL=http://gateway:8787
+    <<: *defaults
 
 
   redis:
