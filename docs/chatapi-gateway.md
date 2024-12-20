@@ -69,6 +69,21 @@ POST: /api/login
   | `isolated_session` | `bool` | 独立会话 |
 
 
+### 登出
+
+POST: /api/logout
+
+- 请求头：
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ----------------------- |
+  | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
+
+
+- 请求参数
+  | 字段 | 类型 | 描述 |
+  | ----- | ------ | ----------------------- |
+  | `user_name` | `string` | 用户名称 |
+
 
 ### 获取长期有效 Mirror Token
 
