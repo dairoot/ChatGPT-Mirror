@@ -1,9 +1,14 @@
+x-defaults: &defaults
+  restart: always
+  env_file:
+    - .env
+  labels:
+    - "com.centurylinklabs.watchtower.enable=true"
+
+
 services:
   web:
     image: dairoot/chatgpt-mirror:latest
-
-    env_file:
-      - .env
     environment:
       - CHATGPT_GATEWAY_URL=http://gateway:8787
     ports:
@@ -12,20 +17,25 @@ services:
       - chatgpt_mirror_db:/app/backend/db/
       - ./backend/logs:/app/backend/logs
 
-    restart: always
 
   gateway:
     image: dairoot/chatgpt-gateway:latest
     deploy:
       replicas: 1 # 账号数量多时可+1
-    env_file:
-      - .env
-    restart: always
     depends_on:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379/0
       - PROXY_URL_POOL=socks5://warp:1080 # warp 代理地址
+
+
+  cf5s:
+    image: dairoot/cf5s:latest
+    depends_on:
+      - gateway
+    environment:
+      - CHATGPT_GATEWAY_URL=http://gateway:8787
+
 
   redis:
     image: redis:latest
@@ -34,27 +44,9 @@ services:
       - chatgpt_gateway_db:/data
     command: ["redis-server", "--appendonly", "yes"]
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: --cleanup --interval 10800 web gateway
 
-  cf5s:
-    image: dairoot/cf5s:latest
-    restart: always
-    depends_on:
-      - gateway
-    env_file:
-      - .env
-    environment:
-      - CHATGPT_GATEWAY_URL=http://gateway:8787
-      
   warp:
     image: caomingjun/warp
-    container_name: warp
     restart: always
     devices:
       - /dev/net/tun:/dev/net/tun
@@ -71,6 +63,13 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     volumes:
       - ./data:/var/lib/cloudflare-warp
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 3600 --label-enable
 
 
 volumes:
