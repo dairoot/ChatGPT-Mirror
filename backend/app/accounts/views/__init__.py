@@ -129,6 +129,13 @@ class UserAccountView(generics.ListCreateAPIView):
         user.remark = serializer.data["remark"]
         user.save()
 
+        if not serializer.data["is_active"]:
+            # 注销登录
+            try:
+                req_gateway("post", "/api/logout", json={"user_name": serializer.data["username"]})
+            except:
+                pass
+
         return Response({"message": "添加成功"})
 
     def delete(self, request, *args, **kwargs):
