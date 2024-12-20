@@ -60,6 +60,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --cleanup --interval 3600 --label-enable
 
+
 volumes:
   chatgpt_mirror_db:
   chatgpt_gateway_db:
