@@ -156,6 +156,7 @@ const onSubmit: FormProps['onSubmit'] = async ({ validateResult, firstError }) =
       loginForm.invite_id = params.get('id');
     }
 
+    // console.log(loginForm)
     const data = await userStore.login(url, loginForm);
     if (data.admin_token && data.is_admin) {
       router.push({ name: 'User' });

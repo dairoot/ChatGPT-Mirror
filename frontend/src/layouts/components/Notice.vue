@@ -74,13 +74,15 @@ const unreadMsgCount = computed(() => {
 
 const getNoticeList = async () => {
   // 获取消息列表
-  // const res1 = await RequestApi('/api/mirror-version');
-  // const data1 = await res1.json();
-  // console.log(data1.data1);
+  let version = '';
+  const res1 = await RequestApi('/version');
+  if (res1.status === 200) {
+    version = await res1.text();
+  }
 
   const res2 = await fetch('https://notice.dairoot.cn/notice-list', {
     method: 'POST',
-    body: JSON.stringify({}),
+    body: JSON.stringify({ version: version }),
     headers: { 'Content-Type': 'application/json' },
   });
   const data2 = await res2.json();
