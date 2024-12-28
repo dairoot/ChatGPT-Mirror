@@ -92,6 +92,7 @@
                 <!-- or
                 <t-link target="_blank" theme="primary" size="small" :href="ChatgptTokenAuthUrl">自动获取</t-link> -->
               </span>
+              <span style="font-size: 12px; color: #888"> Refresh Token：有效期永久 </span>
             </div>
           </t-form-item>
         </t-form>
@@ -211,9 +212,9 @@ const addChatToken = async () => {
   if (response.status !== 200) {
     MessagePlugin.error(JSON.stringify(Object.values(data)[0]));
 
-    if (data.message.includes('status: 403')) {
-      window.location.href = '/';
-    }
+    // if (data.message.includes('status: 403')) {
+    //   window.location.href = '/';
+    // }
   } else {
     showDialog.value = false;
     await getChatGPTList();
