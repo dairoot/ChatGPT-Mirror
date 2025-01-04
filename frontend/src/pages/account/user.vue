@@ -395,7 +395,7 @@ const modelList = [
   { label: 'GPT-4o', value: 'gpt-4o' },
   { label: 'GPT-4o-mini', value: 'gpt-4o-mini' },
   { label: 'o1-mini', value: 'o1-mini' },
-  { label: 'o1-preview', value: 'o1-preview' },
+  { label: 'o1', value: 'o1' },
 ];
 
 const defaultUser = {

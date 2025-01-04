@@ -37,7 +37,7 @@ if __name__ == "__main__":
             {"every_minute": 1, "limit_count": 3, "model_name": "gpt-4o"},
             {"every_minute": 1, "limit_count": 3, "model_name": "gpt-4o-mini"},
             {"every_minute": 1, "limit_count": 1, "model_name": "o1-mini"},
-            {"every_minute": 1, "limit_count": 1, "model_name": "o1-preview", }
+            {"every_minute": 1, "limit_count": 1, "model_name": "o1", }
         ]
     }
     user, created = User.objects.get_or_create(username=FREE_ACCOUNT_USERNAME, defaults=defaults)
