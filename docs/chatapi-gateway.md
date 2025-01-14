@@ -25,7 +25,7 @@ POST: /v1/chat/completions
 - 请求头：
   | 字段 | 类型 | 默认值 | 必填 | 描述 |
   | --- | --- | --- |--- |--- |
-  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${Mirror Token}` |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
   | `Chatgpt-Account-Id` | `string` | `None` | `否` | Team 账号 ID |
 
 - 提交参数：
@@ -43,10 +43,26 @@ POST: /v1/chat/completions
 GET: /api/livekit
 
 - 请求头：
-  | 字段 | 类型 | 描述 |
-  | ----- | ------ | ----------------------- |
-  | `Authorization` | `string` | `Bearer ${环境变量的 ADMIN_PASSWORD}` |
+  | 字段 | 类型 | 默认值 | 必填 | 描述 |
+  | --- | --- | --- |--- |--- |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
 
+
+### 语音转文本
+GET: /v1/audio/speech
+
+- 请求头：
+  | 字段 | 类型 | 默认值 | 必填 | 描述 |
+  | --- | --- | --- |--- |--- |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
+
+
+
+- 提交参数：
+  | 字段 | 类型 | 默认值 | 必填 | 描述 |
+  | --- | --- | --- |--- |--- |
+  | `voice` | `string` | `None` | `是` | `cove`, `orbit`, `breeze`, `fathom`, `glimmer`, `vale`, `juniper`, `ember`, `maple`|
+  | `input` | `string` | `None` | `是` | 文本 |
 
 
 ### 登录 
