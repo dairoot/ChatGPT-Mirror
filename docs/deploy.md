@@ -18,7 +18,7 @@ cp .env.example .env && vi .env
 ./deploy.sh
 ```
 
-- 具体教程请参考：[如何安装 ChatGPT 镜像](https://dairoot.cn/2024/07/02/install-chatgpt-mirror/)。
+- 具体教程请参考：[如何安装 ChatGPT 镜像](https://www.bilibili.com/cheese/play/ss65256?bsource=link_copy)。
 
 
 2. #### 配置 nginx (可以不配置 https， 但推荐配置)
