@@ -25,7 +25,7 @@ POST: /v1/chat/completions
 - 请求头：
   | 字段 | 类型 | 默认值 | 必填 | 描述 |
   | --- | --- | --- |--- |--- |
-  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/cheese/play/ss65256?bsource=link_copy)`}` 或者<br> `Bearer ${ Refresh Token }` |
   | `Chatgpt-Account-Id` | `string` | `None` | `否` | Team 账号 ID |
 
 - 提交参数：
@@ -45,7 +45,7 @@ GET: /api/livekit
 - 请求头：
   | 字段 | 类型 | 默认值 | 必填 | 描述 |
   | --- | --- | --- |--- |--- |
-  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/cheese/play/ss65256?bsource=link_copy)`}` 或者<br> `Bearer ${ Refresh Token }` |
 
 
 ### 语音转文本
@@ -54,7 +54,7 @@ GET: /v1/audio/speech
 - 请求头：
   | 字段 | 类型 | 默认值 | 必填 | 描述 |
   | --- | --- | --- |--- |--- |
-  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6)`}` 或者<br> `Bearer ${ Refresh Token }` |
+  | `Authorization` | `string` | `None` | `是` |`Bearer ${`[Access Token](https://chatgpt.com/api/auth/session)`}` 或者<br>  `Bearer ${ Mirror Token }`  或者<br> `Bearer ${`[Session Token](https://www.bilibili.com/cheese/play/ss65256?bsource=link_copy)`}` 或者<br> `Bearer ${ Refresh Token }` |
 
 
 
@@ -138,7 +138,7 @@ POST: /api/get-user-info
 - 请求参数
   | 字段 | 类型 | 描述 |
   | ----- | ------ | ------------------------------------------------------------------------------ |
-  | `chatgpt_token` | `string` | 支持的 token 类型 <br>- [Access Token](https://chatgpt.com/api/auth/session) <br>- [Session Token](https://www.bilibili.com/video/BV1fD421M7xP/?share_source=copy_web&vd_source=4c37761f5ba7612e942a84820f8099f6) <br>- Refresh Token |
+  | `chatgpt_token` | `string` | 支持的 token 类型 <br>- [Access Token](https://chatgpt.com/api/auth/session) <br>- [Session Token](https://www.bilibili.com/cheese/play/ss65256?bsource=link_copy) <br>- Refresh Token |
 
 
 
