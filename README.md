@@ -61,7 +61,7 @@ cp .env.example .env && vi .env
     <th>描述</th>
   </tr>
   <tr align="left">
-    <td rowspan="4">管理后台</td>
+    <td rowspan="4">镜像后台</td>
     <td><code>ADMIN_USERNAME</code></td>
     <td><code>String</code></td>
     <td><code>None</code></td>
@@ -73,18 +73,17 @@ cp .env.example .env && vi .env
     <td><code>None</code></td>
     <td>管理后台密码</td>
   </tr>
-    <tr align="left">
+  <tr align="left">
     <td><code>ALLOW_REGISTER</code></td>
     <td><code>Boolean</code></td>
     <td><code>true</code></td>
     <td>是否允许注册</td>
   </tr>
-  </tr>
-    <tr align="left">
-    <td><code>USE_SERVER_RENDER</code></td>
+  <tr align="left">
+    <td><code>WEB_HATD</code></td>
     <td><code>Boolean</code></td>
-    <td><code>true</code></td>
-    <td>服务端托管 Proofofwork</td>
+    <td><code>false</code></td>
+    <td>WEB 开启临时聊天（不保存聊天记录）</td>
   </tr>
   <tr align="left">
     <td rowspan="3">API 相关</td>
@@ -100,10 +99,10 @@ cp .env.example .env && vi .env
     <td>API 访问前缀，建议配置</td>
   </tr>
   <tr align="left">
-    <td><code>HATD</code></td>
+    <td><code>API_HATD</code></td>
     <td><code>Boolean</code></td>
     <td><code>false</code></td>
-    <td>开启临时聊天（不保存聊天记录）</td>
+    <td>API 开启临时聊天（不保存聊天记录）</td>
   </tr>
    <tr align="left">
     <td rowspan="3">系统变量</td>
