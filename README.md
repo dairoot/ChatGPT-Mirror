@@ -154,10 +154,6 @@ curl --location "${yourUrl}/v1/chat/completions" \
 
 [简体中文 > 常见问题](./docs/faq-cn.md)
 
-## 加入群聊
-
-[Telegram](https://t.me/+34aYksZdq5ZhMzhl)
-
 ## 捐赠
 
 [Buy Me a Coffee](./docs/donation.md)
