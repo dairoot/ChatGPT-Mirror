@@ -150,7 +150,7 @@ curl --location "${yourUrl}/v1/chat/completions" \
 
 更多 API 请点击查看：[高阶玩法](./docs/chatapi-gateway.md)
 
-## FQA
+## FAQ
 
 [简体中文 > 常见问题](./docs/faq-cn.md)
 
